@@ -43,14 +43,14 @@ status = "active"
 id = 3
 name = "Immunology / Drug Discovery"
 short = "immuno"
-basecamp_papers = ["12", "13"]
+basecamp_papers = ["12", "13", "22"]
 springs = ["wetSpring", "airSpring", "healthSpring"]
 contacts = ["Gonzales", "Lisabeth", "Neubig"]
 external_lineages = ["Gonzales JAK/mAb Series (G1-G6)"]
-expression = ""
-data_sources = ""
-data_targets = ""
-status = "mapped"
+expression = "expressions/IMMUNO_DRUG_DISCOVERY.md"
+data_sources = "data/sources/thread03_immuno.toml"
+data_targets = "data/targets/thread03_immuno_targets.toml"
+status = "seeded"
 
 [[threads]]
 id = 4
