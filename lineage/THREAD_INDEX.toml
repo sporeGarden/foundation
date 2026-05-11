@@ -117,10 +117,10 @@ basecamp_papers = ["13", "22"]
 springs = ["healthSpring"]
 contacts = ["Mok", "Gonzales"]
 external_lineages = ["Mok Clinical Series (9 experiments)"]
-expression = ""
-data_sources = ""
-data_targets = ""
-status = "mapped"
+expression = "expressions/SOVEREIGN_HEALTH.md"
+data_sources = "data/sources/thread08_health.toml"
+data_targets = "data/targets/thread08_health_targets.toml"
+status = "seeded"
 
 [[threads]]
 id = 9
