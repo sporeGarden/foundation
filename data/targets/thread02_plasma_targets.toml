@@ -15,7 +15,7 @@
 [meta]
 thread = 2
 thread_name = "Plasma Physics / Lattice QCD"
-expression = ""
+expression = "expressions/PLASMA_QCD_SOVEREIGN_GPU.md"
 last_updated = "2026-05-11"
 total_targets = 12
 

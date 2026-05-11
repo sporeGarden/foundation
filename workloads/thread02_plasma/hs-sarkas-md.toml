@@ -1,12 +1,12 @@
-# Thread 2: hotSpring — Sarkas Yukawa MD Validation
+# Thread 2 Plasma Physics — hotSpring Sarkas Yukawa MD
 #
-# Validates 12 Sarkas-derived targets: energy drift, RDF structure,
-# self-diffusion D*, viscosity, Daligault fit parity.
-# Exit code 0 = all 12 targets pass.
+# foundation_validate.sh --thread plasma discovers this via thread*plasma* glob.
+# Runs the sarkas-yukawa-md scenario from hotSpring UniBin validate.
+# Validates 12+ foundation targets: energy drift, D*, Daligault fit, RDF.
 
 [metadata]
-name = "hs-sarkas-md-validation"
-description = "Sarkas Yukawa OCP molecular dynamics — 12 foundation targets, paper parity"
+name = "hs-sarkas-md"
+description = "Sarkas Yukawa OCP — Daligault D* fit + energy conservation + transport parity"
 version = "0.1.0"
 thread = "02"
 thread_name = "Plasma Physics / Lattice QCD"
