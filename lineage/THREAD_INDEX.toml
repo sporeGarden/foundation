@@ -106,7 +106,7 @@ external_lineages = ["Kachkovskiy/Anderson Math (11 papers, Anderson 1958 - BK 2
 cross_cutting = true
 expression = "expressions/MEASUREMENT_SCIENCE.md"
 data_sources = "data/sources/thread07_anderson.toml"
-data_targets = "data/targets/thread06_ag_targets.toml"
+data_targets = "data/targets/thread07_anderson_targets.toml"
 status = "active"
 
 [[threads]]
