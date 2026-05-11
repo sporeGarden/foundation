@@ -129,11 +129,11 @@ short = "gaming"
 basecamp_papers = ["17", "18", "19", "24a"]
 springs = ["ludoSpring"]
 contacts = []
-external_lineages = []
+external_lineages = ["Fitts (1954)", "Hick (1952)", "Accot-Zhai (1997)", "Perlin (1985)", "Lindenmayer (1968)", "Lazzaro (2004)"]
 expression = ""
-data_sources = ""
-data_targets = ""
-status = "mapped"
+data_sources = "data/sources/thread09_gaming.toml"
+data_targets = "data/targets/thread09_gaming_targets.toml"
+status = "active"
 
 [[threads]]
 id = 10

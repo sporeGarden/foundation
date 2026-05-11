@@ -1,0 +1,200 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Data sources for Thread 9: Gaming / Creative
+# Public data anchors for baseCamp Papers 17, 18, 19, 24a.
+# HCI research, procedural generation, game design theory, engagement metrics.
+
+[meta]
+thread = 9
+thread_name = "Gaming / Creative"
+expression = ""
+last_updated = "2026-05-11"
+total_sources = 14
+
+# =============================================================================
+# Interaction Science — HCI Foundation (Paper 17)
+# =============================================================================
+
+[[sources]]
+id = "fitts_1954"
+database = "Literature"
+description = "Fitts PM (1954) The information capacity of the human motor system — Fitts's Law"
+accessions = ["10.1037/h0055392"]
+url = "https://doi.org/10.1037/h0055392"
+format = "pdf"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "ludoSpring: 13 HCI models validated. Fitts's Law ID = log2(2A/W)."
+
+[[sources]]
+id = "hick_1952"
+database = "Literature"
+description = "Hick WE (1952) On the rate of gain of information — Hick's Law"
+accessions = ["10.1080/17470215208416600"]
+url = "https://doi.org/10.1080/17470215208416600"
+format = "pdf"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "ludoSpring: reaction time RT = a + b * log2(n+1)."
+
+[[sources]]
+id = "accot_zhai_1997"
+database = "Literature"
+description = "Accot J, Zhai S (1997) Beyond Fitts' law — Steering Law"
+accessions = ["10.1145/258549.258760"]
+url = "https://doi.org/10.1145/258549.258760"
+format = "pdf"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "ludoSpring: path-following cost = integral(ds/W(s)). Validated against tunnel-steering experiments."
+
+[[sources]]
+id = "card_moran_newell_1983"
+database = "Literature"
+description = "Card SK, Moran TP, Newell A (1983) The Psychology of Human-Computer Interaction — GOMS/KLM"
+accessions = ["ISBN:978-0898598599"]
+url = ""
+format = "book"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "ludoSpring: KLM task time prediction. 6 operators validated with published time constants."
+
+[[sources]]
+id = "csikszentmihalyi_1990"
+database = "Literature"
+description = "Csikszentmihalyi M (1990) Flow: The Psychology of Optimal Experience"
+accessions = ["ISBN:978-0061339202"]
+url = ""
+format = "book"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "ludoSpring: flow state computation (skill/challenge balance). DDA session modeling."
+
+# =============================================================================
+# Procedural Generation (Papers 17, 19)
+# =============================================================================
+
+[[sources]]
+id = "perlin_1985"
+database = "Literature"
+description = "Perlin K (1985) An image synthesizer — Perlin noise"
+accessions = ["10.1145/325334.325247"]
+url = "https://doi.org/10.1145/325334.325247"
+format = "pdf"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "ludoSpring: 2D/3D Perlin noise + fBm validated. Lattice zero property verified."
+
+[[sources]]
+id = "merrell_2007_wfc"
+database = "Literature"
+description = "Merrell P (2007) Example-Based Model Synthesis — Wave Function Collapse antecedent"
+accessions = ["10.1145/1276377.1276431"]
+url = "https://doi.org/10.1145/1276377.1276431"
+format = "pdf"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "ludoSpring: WFC tile constraint propagation validated. Entropy-driven cell selection."
+
+[[sources]]
+id = "lindenmayer_1968"
+database = "Literature"
+description = "Lindenmayer A (1968) Mathematical models for cellular interactions in development — L-systems"
+accessions = ["10.1016/S0022-5193(68)80030-8"]
+url = "https://doi.org/10.1016/S0022-5193(68)80030-8"
+format = "pdf"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "ludoSpring: deterministic L-system expansion + turtle geometry validated."
+
+# =============================================================================
+# Game Design Theory (Papers 17, 18, 24a) — queued for experiment design
+# =============================================================================
+
+[[sources]]
+id = "bartle_1996"
+database = "Literature"
+description = "Bartle RA (1996) Hearts, Clubs, Diamonds, Spades — player type taxonomy"
+accessions = []
+url = "https://mud.co.uk/richard/hcds.htm"
+format = "html"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "Queued: design validation experiments for player type classification."
+
+[[sources]]
+id = "hunicke_mda_2004"
+database = "Literature"
+description = "Hunicke R, LeBlanc M, Zubek R (2004) MDA: A Formal Approach to Game Design"
+accessions = []
+url = "https://users.cs.northwestern.edu/~hunicke/MDA.pdf"
+format = "pdf"
+blake3 = ""
+retrieved = ""
+paper = "18"
+notes = "Queued: Mechanics-Dynamics-Aesthetics decomposition for game system analysis."
+
+[[sources]]
+id = "schell_2008"
+database = "Literature"
+description = "Schell J (2008) The Art of Game Design: A Book of Lenses"
+accessions = ["ISBN:978-0123694966"]
+url = ""
+format = "book"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "Queued: lens-based evaluation framework for game design validation."
+
+# =============================================================================
+# Engagement Metrics & Fun Science (Paper 17)
+# =============================================================================
+
+[[sources]]
+id = "lazzaro_2004"
+database = "Literature"
+description = "Lazzaro N (2004) Why We Play Games: Four Keys to More Emotion Without Story"
+accessions = []
+url = "https://xeodesign.com/xeodesign_whyweplaygames.pdf"
+format = "pdf"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "ludoSpring: Four Keys engagement metric. Fun classification validated."
+
+[[sources]]
+id = "tufte_2001"
+database = "Literature"
+description = "Tufte ER (2001) The Visual Display of Quantitative Information"
+accessions = ["ISBN:978-0961392147"]
+url = ""
+format = "book"
+blake3 = ""
+retrieved = ""
+paper = "17"
+notes = "ludoSpring: Tufte metrics — data-ink ratio, chartjunk detection, lie factor."
+
+# =============================================================================
+# Provenance Cross-Domain (Papers 19, 20, 21)
+# =============================================================================
+
+[[sources]]
+id = "churchill_mtg_turing"
+database = "Literature"
+description = "Churchill et al. (2019) Magic: The Gathering is Turing Complete"
+accessions = ["arXiv:1904.09828"]
+url = "https://arxiv.org/abs/1904.09828"
+format = "pdf"
+blake3 = ""
+retrieved = ""
+paper = "19"
+notes = "Games@Home cross-domain transfer. Game tree complexity as design metric. See also thread02_plasma."
