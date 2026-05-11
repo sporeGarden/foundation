@@ -1,0 +1,247 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Validation targets for Thread 7: Anderson Mathematics
+# Expected numerical and qualitative results groundSpring must reproduce.
+
+[meta]
+thread = 7
+thread_name = "Anderson Mathematics"
+expression = "expressions/MEASUREMENT_SCIENCE.md"
+last_updated = "2026-05-08"
+total_targets = 18
+
+# =============================================================================
+# Anderson Localization — Lyapunov Exponents (Exp 008)
+# =============================================================================
+
+[[targets]]
+id = "anderson_1d_lyapunov_w4"
+paper = "Kachkovskiy_Localization"
+description = "1D Lyapunov exponent at W=4.0, L=10000, band centre"
+expected_value = 0.82
+unit = "inverse_sites"
+tolerance = 0.05
+source = "groundSpring Exp 008, 100 realizations"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "anderson_1d_all_localized"
+paper = "Kachkovskiy_Localization"
+description = "All states localized in 1D for any W>0 (Anderson theorem)"
+expected_value = 1.0
+unit = "fraction_localized"
+tolerance = 0.0
+source = "Anderson 1958 theorem, verified Exp 008"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# Localization Lengths (Exp 009)
+# =============================================================================
+
+[[targets]]
+id = "anderson_localization_length_scaling"
+paper = "Kachkovskiy_Localization"
+description = "Localization length ξ(W) scales as 1/W² for weak disorder"
+expected_value = -2.0
+unit = "power_law_exponent"
+tolerance = 0.2
+source = "Thouless 1972, verified Exp 009 finite-size scaling"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "transport_eigenvalue_gap"
+paper = "Kachkovskiy_Localization"
+description = "Spectral gap closes at Anderson transition in 3D"
+expected_value = 0.0
+unit = "eV"
+tolerance = 0.01
+source = "Anderson 1958, verified Exp 009 transport coefficients"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# Almost-Mathieu / Quasiperiodic (Exp 012)
+# =============================================================================
+
+[[targets]]
+id = "almost_mathieu_critical_lambda"
+paper = "Avila_Localization"
+description = "Critical coupling λ_c = 2.0 for almost-Mathieu operator"
+expected_value = 2.0
+unit = "dimensionless"
+tolerance = 0.001
+source = "Avila 2015 (Fields Medal), verified Exp 012"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "hofstadter_butterfly_fractal"
+paper = "Avila_Localization"
+description = "Hofstadter butterfly spectrum is Cantor set at λ=2"
+expected_value = 0.0
+unit = "measure"
+tolerance = 0.0
+source = "Hofstadter 1976, verified Exp 012 spectral analysis"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# Band Structure (Exp 015)
+# =============================================================================
+
+[[targets]]
+id = "band_edge_tight_binding"
+paper = "Anderson_Localization"
+description = "Tight-binding chain band edges at E = ±2t"
+expected_value = 2.0
+unit = "hopping_units"
+tolerance = 0.001
+source = "Solid-state textbook result, verified Exp 015"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# Freeze-Out Curve (Exp 018)
+# =============================================================================
+
+[[targets]]
+id = "freeze_out_t0_bazavov"
+paper = "Bazavov_FreezeOut"
+description = "Chemical freeze-out temperature T₀ from Bazavov et al. 2016"
+expected_value = 158.4
+unit = "MeV"
+tolerance = 2.0
+source = "Bazavov et al. 2016 lattice QCD, verified Exp 018"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "freeze_out_kappa2_bazavov"
+paper = "Bazavov_FreezeOut"
+description = "Curvature parameter κ₂ from Bazavov et al. 2016"
+expected_value = 0.012
+unit = "dimensionless"
+tolerance = 0.005
+source = "Bazavov et al. 2016 lattice QCD, verified Exp 018"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# Spectral Reconstruction (Exp 028)
+# =============================================================================
+
+[[targets]]
+id = "spectral_tikhonov_rmse"
+paper = "Spectral_Recon"
+description = "Tikhonov spectral reconstruction RMSE below threshold"
+expected_value = 0.0001
+unit = "dimensionless"
+tolerance = 0.0001
+source = "Hansen 1998, verified Exp 028 round-trip"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# Tissue Anderson 3D (Exp 033)
+# =============================================================================
+
+[[targets]]
+id = "tissue_anderson_3d_localized"
+paper = "Tissue_Anderson"
+description = "3D correlated Anderson model shows localization transition"
+expected_value = 16.5
+unit = "W_c_dimensionless"
+tolerance = 1.0
+source = "groundSpring Exp 033, Gaussian-correlated disorder"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# Cross-Atomic Pipeline (Exp 094/095)
+# =============================================================================
+
+[[targets]]
+id = "composition_tower_health"
+paper = "NUCLEUS_Parity"
+description = "Tower (BearDog crypto hash) returns healthy"
+expected_value = 1.0
+unit = "boolean"
+tolerance = 0.0
+source = "groundSpring Exp 094, NUCLEUS composition parity"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "composition_node_parity"
+paper = "NUCLEUS_Parity"
+description = "Node scalar/vector parity within STOCHASTIC tolerance"
+expected_value = 1.0
+unit = "boolean"
+tolerance = 0.0
+source = "groundSpring Exp 094, barraCuda stats vs local"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "composition_nest_roundtrip"
+paper = "NUCLEUS_Parity"
+description = "Nest storage round-trip preserves data integrity"
+expected_value = 1.0
+unit = "boolean"
+tolerance = 0.0
+source = "groundSpring Exp 094, NestGate put/get"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "composition_cross_atomic_pipeline"
+paper = "NUCLEUS_Parity"
+description = "Cross-atomic hash→store→retrieve pipeline succeeds"
+expected_value = 1.0
+unit = "boolean"
+tolerance = 0.0
+source = "groundSpring Exp 094, BearDog→NestGate"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "measurement_niche_noise_decomposition"
+paper = "NUCLEUS_Parity"
+description = "Noise decomposition parity: local Rust vs IPC stats.mean"
+expected_value = 1.0
+unit = "boolean"
+tolerance = 0.0
+source = "groundSpring Exp 095, measurement niche validation"
+spring = "groundSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "measurement_anderson_scaling"
+paper = "NUCLEUS_Parity"
+description = "Anderson localization scaling parity via IPC"
+expected_value = 1.0
+unit = "boolean"
+tolerance = 0.0
+source = "groundSpring Exp 095, measurement niche validation"
+spring = "groundSpring"
+blake3 = ""
+validated = true

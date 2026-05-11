@@ -52,8 +52,10 @@ need to evolve:
 | Thread | Date | Spring | Targets | Status |
 |--------|------|--------|---------|--------|
 | 2 — Plasma Physics | 2026-05-11 | hotSpring v0.6.32 | 12/12 PASS | Validated |
+| 6 — Agricultural Science | 2026-05-11 | airSpring v0.10.0 | 36/36 PASS | Validated |
+| 7 — Anderson Mathematics | 2026-05-11 | groundSpring V132 | 18/18 PASS | Validated |
 
-See `plasma-20260511/` for provenance manifest and validation summary.
+See `plasma-20260511/`, `ag-20260511/`, `anderson-20260511/` for provenance manifests.
 
 ## Filing Gaps
 
