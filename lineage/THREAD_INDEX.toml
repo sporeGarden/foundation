@@ -36,8 +36,8 @@ contacts = ["Murillo", "Chuna", "Bazavov"]
 external_lineages = ["Murillo/Chuna Plasma Chain (Stanton & Murillo - Chuna 2024)"]
 expression = ""
 data_sources = "data/sources/thread02_plasma.toml"
-data_targets = ""
-status = "mapped"
+data_targets = "data/targets/thread02_plasma_targets.toml"
+status = "active"
 
 [[threads]]
 id = 3

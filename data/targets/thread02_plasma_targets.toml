@@ -1,0 +1,200 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Validation targets for Thread 2: Plasma Physics / Lattice QCD
+# Sarkas Yukawa OCP molecular dynamics — paper parity results.
+#
+# These targets represent hotSpring's validated reproduction of published
+# Sarkas MD transport and structural properties. Each target is traceable
+# to Choi, Dharuman & Murillo PRE 100 013206 (2019) / Stanton & Murillo
+# PRE 93 043203 (2016) via Sarkas 1.0.0 (CPC 2022, doi:10.1016/j.cpc.2021.108245).
+#
+# Provenance: control/sarkas/simulations/dsf-study/scripts/validate_all_observables.py
+# Environment: Python 3.10, Sarkas 1.0.0, NumPy 2.2
+# hotSpring commit: 0a6405f (Paper 5 transport baseline, 2026-02-19)
+
+[meta]
+thread = 2
+thread_name = "Plasma Physics / Lattice QCD"
+expression = ""
+last_updated = "2026-05-11"
+total_targets = 12
+
+# =============================================================================
+# Sarkas Yukawa OCP: Energy conservation (9 PP cases)
+# =============================================================================
+# Energy drift must be < 0.5% across N=10k particles, 80k MD steps.
+# Measured: 0.000–0.002% across all 9 Sarkas PP (κ,Γ) cases.
+# Source: hotSpring METHODOLOGY.md §Phase C acceptance criteria.
+
+[[targets]]
+id = "sarkas_energy_drift_max"
+paper = "07"
+description = "Maximum energy drift across 9 Sarkas Yukawa PP cases (N=10k, 80k steps)"
+expected_value = 0.0
+unit = "percent"
+tolerance = 0.5
+source = "hotSpring validated, Stanton & Murillo PRE 93 043203 (2016)"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+notes = "Measured: 0.000–0.002%. Tolerance 0.5% is 250× above worst case."
+
+# =============================================================================
+# Sarkas Yukawa OCP: RDF tail convergence
+# =============================================================================
+# |g(r→∞) − 1| must converge to 0 for a well-equilibrated fluid.
+# Measured across 9 PP cases: ≤ 0.0017.
+
+[[targets]]
+id = "sarkas_rdf_tail_convergence"
+paper = "07"
+description = "RDF tail convergence |g(r→∞) − 1| across 9 Sarkas Yukawa PP cases"
+expected_value = 0.0
+unit = "dimensionless"
+tolerance = 0.02
+source = "hotSpring validated, Stanton & Murillo PRE 93 043203 (2016)"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+notes = "Measured: ≤ 0.0017. Tolerance 0.02 is 12× above worst case."
+
+# =============================================================================
+# Sarkas Yukawa OCP: Self-diffusion (D*) — Rust vs Sarkas Python
+# =============================================================================
+# Green-Kubo D* from hotSpring Rust MD vs Python Sarkas reference.
+# 12 (κ,Γ) points covering κ ∈ {0,1,2,3}, weak→strong coupling.
+
+[[targets]]
+id = "sarkas_d_star_k0_g10"
+paper = "07"
+description = "Self-diffusion D* at κ=0 Γ=10 — Rust vs Sarkas Python"
+expected_value = 1.253e-01
+unit = "reduced_D_star"
+tolerance = 0.05
+source = "Sarkas 1.0.0 VACF, D_MKS=5.856e-07 / a²ωp=4.675e-06"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+notes = "Weak coupling OCP. 5% tolerance for Green-Kubo stochastic noise."
+
+[[targets]]
+id = "sarkas_d_star_k0_g50"
+paper = "07"
+description = "Self-diffusion D* at κ=0 Γ=50 — Rust vs Sarkas Python"
+expected_value = 1.295e-02
+unit = "reduced_D_star"
+tolerance = 0.05
+source = "Sarkas 1.0.0 VACF, D_MKS=6.054e-08 / a²ωp=4.675e-06"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "sarkas_d_star_k0_g150"
+paper = "07"
+description = "Self-diffusion D* at κ=0 Γ=150 — Rust vs Sarkas Python"
+expected_value = 4.312e-03
+unit = "reduced_D_star"
+tolerance = 0.05
+source = "Sarkas 1.0.0 VACF, D_MKS=2.017e-08 / a²ωp=4.675e-06"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "sarkas_d_star_k1_g14"
+paper = "07"
+description = "Self-diffusion D* at κ=1 Γ=14 — Rust vs Sarkas Python"
+expected_value = 1.049e-01
+unit = "reduced_D_star"
+tolerance = 0.05
+source = "Sarkas 1.0.0 VACF, D_MKS=4.903e-07 / a²ωp=4.675e-06"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "sarkas_d_star_k2_g31"
+paper = "07"
+description = "Self-diffusion D* at κ=2 Γ=31 — Rust vs Sarkas Python"
+expected_value = 6.418e-02
+unit = "reduced_D_star"
+tolerance = 0.05
+source = "Sarkas 1.0.0 VACF, D_MKS=3.001e-07 / a²ωp=4.675e-06"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "sarkas_d_star_k3_g100"
+paper = "07"
+description = "Self-diffusion D* at κ=3 Γ=100 — Rust vs Sarkas Python"
+expected_value = 2.901e-02
+unit = "reduced_D_star"
+tolerance = 0.05
+source = "Sarkas 1.0.0 VACF, D_MKS=1.356e-07 / a²ωp=4.675e-06"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# Sarkas Yukawa OCP: RDF structural validation
+# =============================================================================
+# First peak of g(r) — position and height at selected (κ,Γ) points.
+# Validates structural ordering against Sarkas N=2000 reference.
+
+[[targets]]
+id = "sarkas_rdf_peak_height_k0_g150"
+paper = "07"
+description = "RDF first peak height g(r_peak) at κ=0 Γ=150 (strong coupling)"
+expected_value = 2.358
+unit = "dimensionless"
+tolerance = 0.1
+source = "Sarkas 1.0.0 N=2000 RDF, commit 0a6405f"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+notes = "Strong coupling shows sharp structural peak. Position r_peak=1.719 a_ws."
+
+[[targets]]
+id = "sarkas_rdf_peak_height_k3_g1510"
+paper = "07"
+description = "RDF first peak height g(r_peak) at κ=3 Γ=1510 (strongest coupling)"
+expected_value = 2.607
+unit = "dimensionless"
+tolerance = 0.1
+source = "Sarkas 1.0.0 N=2000 RDF, commit 0a6405f"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+notes = "Highest coupling point in validation suite. Position r_peak=1.698 a_ws."
+
+# =============================================================================
+# Sarkas Yukawa OCP: Transport coefficient — Daligault fit parity
+# =============================================================================
+
+[[targets]]
+id = "sarkas_daligault_fit_rmse"
+paper = "07"
+description = "Daligault D*(Γ,κ) analytical fit RMSE vs 12 Sarkas calibration points"
+expected_value = 0.0
+unit = "dimensionless_fraction"
+tolerance = 0.10
+source = "calibrate_daligault_fit.py, Feb 2026, Daligault PRE 86 047401 (2012)"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+notes = "Fit has 5 parameters: A(κ), α(κ) quadratics + C_w. RMSE < 10% across 12 points."
+
+[[targets]]
+id = "sarkas_viscosity_rust_vs_sarkas"
+paper = "07"
+description = "Viscosity η* Rust stress-ACF vs Sarkas Python reference"
+expected_value = 0.0
+unit = "relative_error"
+tolerance = 0.10
+source = "Stanton & Murillo PRE 93 043203 (2016), Green-Kubo stress-tensor ACF"
+spring = "hotSpring"
+blake3 = ""
+validated = true
+notes = "Stress tensor ACF converges slower than VACF. 10% agreement for lite runs."

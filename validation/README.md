@@ -49,9 +49,11 @@ need to evolve:
 
 ### Validation Runs
 
-No thread validation runs have been executed yet. This directory will be
-populated as spring experiments begin implementing thread expressions
-and running them through NUCLEUS compositions.
+| Thread | Date | Spring | Targets | Status |
+|--------|------|--------|---------|--------|
+| 2 — Plasma Physics | 2026-05-11 | hotSpring v0.6.32 | 12/12 PASS | Validated |
+
+See `plasma-20260511/` for provenance manifest and validation summary.
 
 ## Filing Gaps
 
