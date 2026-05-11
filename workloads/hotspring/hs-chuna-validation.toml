@@ -1,0 +1,26 @@
+# Thread 2: hotSpring — Chuna Papers 43-45 Validation
+#
+# Validates gradient flow (Bazavov & Chuna 2021), BGK dielectric
+# (Chuna & Murillo 2024), and kinetic-fluid coupling (Haack et al. 2024).
+# CPU checks + GPU parity on available adapters.
+
+[metadata]
+name = "hs-chuna-validation"
+description = "Chuna papers 43-45: gradient flow, BGK dielectric, kinetic-fluid coupling"
+version = "0.1.0"
+thread = "02"
+thread_name = "Plasma Physics / Lattice QCD"
+spring = "hotSpring"
+
+[execution]
+type = "native"
+command = "${SPRINGS_ROOT:-$HOME/Development/ecoPrimals/springs}/hotSpring/barracuda/target/release/validate_chuna"
+args = []
+working_dir = "${SPRINGS_ROOT:-$HOME/Development/ecoPrimals/springs}/hotSpring"
+
+[resources]
+max_memory_bytes = 4294967296
+max_cpu_percent = 90.0
+
+[security]
+isolation_level = "None"

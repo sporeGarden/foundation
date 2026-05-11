@@ -1,0 +1,26 @@
+# Thread 2: hotSpring — Sarkas Yukawa MD Validation
+#
+# Validates 12 Sarkas-derived targets: energy drift, RDF structure,
+# self-diffusion D*, viscosity, Daligault fit parity.
+# Exit code 0 = all 12 targets pass.
+
+[metadata]
+name = "hs-sarkas-md-validation"
+description = "Sarkas Yukawa OCP molecular dynamics — 12 foundation targets, paper parity"
+version = "0.1.0"
+thread = "02"
+thread_name = "Plasma Physics / Lattice QCD"
+spring = "hotSpring"
+
+[execution]
+type = "native"
+command = "${SPRINGS_ROOT:-$HOME/Development/ecoPrimals/springs}/hotSpring/barracuda/target/release/hotspring_unibin"
+args = ["validate", "--scenario", "sarkas_yukawa_md"]
+working_dir = "${SPRINGS_ROOT:-$HOME/Development/ecoPrimals/springs}/hotSpring"
+
+[resources]
+max_memory_bytes = 8589934592
+max_cpu_percent = 90.0
+
+[security]
+isolation_level = "None"
