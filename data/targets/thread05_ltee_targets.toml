@@ -1,0 +1,122 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Validation targets for Thread 5: Evolutionary Biology / LTEE
+# Maps LTEE paper reproductions to concrete validation outcomes.
+
+[meta]
+thread = 5
+thread_name = "Evolutionary Biology / LTEE"
+last_updated = "2026-05-11"
+total_targets = 10
+
+# =============================================================================
+# Core LTEE reproductions
+# =============================================================================
+
+[[targets]]
+id = "ltee_fitness_model_selection"
+paper = "B2"
+spring = "groundSpring"
+description = "Power-law vs hyperbolic vs logarithmic fitness trajectory — AIC/BIC model selection"
+metric = "AIC delta between power-law and hyperbolic (power-law wins by >10 AIC units)"
+status = "COMPLETE"
+experiment = "groundSpring/control/ltee_fitness_dynamics/"
+notes = "First complete LTEE reproduction → lithoSpore module 1."
+
+[[targets]]
+id = "ltee_neutral_mutation"
+paper = "B1"
+spring = "groundSpring"
+description = "Neutral mutation accumulation rate matches molecular clock hypothesis"
+metric = "Mutation rate ≈ 8.9e-11 per bp per generation (±20%)"
+status = "COMPLETE"
+experiment = "groundSpring/control/ltee_neutral_mutation/"
+notes = "B1 Rust validation done → lithoSpore module 2."
+
+[[targets]]
+id = "ltee_citrate_potentiation"
+paper = "02"
+spring = "wetSpring"
+description = "Cit+ innovation requires historical contingency — potentiating mutations"
+metric = "Replay experiments show Cit+ only from potentiated lineages"
+status = "STARTED"
+experiment = "wetSpring B7 (Tenaillon 2016 mutation accumulation)"
+notes = "wetSpring B7 in progress."
+
+[[targets]]
+id = "ltee_mutation_accumulation_rust"
+paper = "B1"
+spring = "neuralSpring"
+description = "Rust validation of mutation accumulation model — neuralSpring B1"
+metric = "Rust parity with Python baseline"
+status = "STARTED"
+experiment = "neuralSpring B1"
+notes = "Python baseline done, Rust validation pending."
+
+# =============================================================================
+# healthSpring LTEE targets (B5, E2, E4)
+# =============================================================================
+
+[[targets]]
+id = "ltee_symbiont_pkpd"
+paper = "B5"
+spring = "healthSpring"
+description = "Symbiont PK/PD — logistic colonization, biomass-proportional production, gut-lumen one-compartment PK, Hill knockdown efficacy"
+metric = "8/8 checks: colonization at carrying capacity, doubling time, PK half-life, steady-state molecule concentration, Hill knockdown at steady state"
+status = "STARTED"
+experiment = "healthSpring/control/ltee_symbiont_pkpd/"
+notes = "Tier 0 Python baseline complete (8/8 pass). Tier 1 Rust validation pending."
+
+[[targets]]
+id = "ltee_holigraph_oatp"
+paper = "E2"
+spring = "healthSpring"
+description = "OATP PK/PD bridge — protein-ligand binding predictions for drug transporter interactions"
+metric = "Binding affinity predictions within 0.5 log units of experimental Ki/IC50"
+status = "QUEUED"
+experiment = ""
+notes = "Bridges LTEE-evolved enzyme fitness with drug transporter pharmacokinetics."
+
+[[targets]]
+id = "ltee_macrocyclic_addrc"
+paper = "E4"
+spring = "healthSpring"
+description = "Cyclic peptide → ADDRC: macrocyclic peptide screening applied to anti-doping reference compounds"
+metric = "Screening enrichment factor >10 for known prohibited substances"
+status = "QUEUED"
+experiment = ""
+notes = "Connects peptide evolution with ADDRC reference compound validation."
+
+# =============================================================================
+# Cross-spring targets
+# =============================================================================
+
+[[targets]]
+id = "ltee_anderson_fitness"
+paper = "B2"
+spring = "hotSpring"
+description = "Anderson model applied to LTEE fitness landscapes — spectral analysis of fitness trajectory"
+metric = "Anderson localization length correlates with population fitness variance"
+status = "STARTED"
+experiment = "hotSpring B2"
+notes = "hotSpring B2 Anderson fitness reproduction in progress."
+
+[[targets]]
+id = "ltee_fls2_environmental"
+paper = "E3"
+spring = "airSpring"
+description = "Dolgikh FLS2 — environmental/atmospheric angle on evolved immune receptors"
+metric = "FLS2 receptor binding kinetics reproduced"
+status = "QUEUED"
+experiment = ""
+notes = "airSpring's unique environmental/atmospheric LTEE angle."
+
+[[targets]]
+id = "ltee_digital_evolution"
+paper = "10a"
+spring = "groundSpring"
+description = "AVIDA digital evolution validation — Dolson eco-evolutionary dynamics"
+metric = "Digital fitness trajectories match analytical power-law predictions"
+status = "QUEUED"
+experiment = ""
+notes = "In-silico LTEE validation via AVIDA platform."

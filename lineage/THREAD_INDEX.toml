@@ -74,13 +74,13 @@ id = 5
 name = "Evolutionary Biology / LTEE"
 short = "ltee"
 basecamp_papers = ["02", "10a"]
-springs = ["wetSpring", "neuralSpring"]
+springs = ["wetSpring", "neuralSpring", "healthSpring", "groundSpring", "hotSpring", "airSpring"]
 contacts = ["Dolson", "Waters"]
-external_lineages = []
-expression = ""
-data_sources = ""
-data_targets = ""
-status = "mapped"
+external_lineages = ["Lenski LTEE (1988-present)", "Barrick Lab genomics"]
+expression = "expressions/LTEE_EVOLUTION.md"
+data_sources = "data/sources/thread05_ltee.toml"
+data_targets = "data/targets/thread05_ltee_targets.toml"
+status = "seeded"
 
 [[threads]]
 id = 6

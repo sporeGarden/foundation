@@ -1,0 +1,177 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Data sources for Thread 5: Evolutionary Biology / LTEE
+# Public data anchors for long-term evolution experiments and related
+# symbiont engineering, protein-ligand binding, and peptide screening.
+# Covers baseCamp Papers 02, 10a and LTEE queue papers B5, E2, E4.
+
+[meta]
+thread = 5
+thread_name = "Evolutionary Biology / LTEE"
+expression = "expressions/LTEE_EVOLUTION.md"
+last_updated = "2026-05-11"
+total_sources = 12
+
+# =============================================================================
+# Core LTEE datasets (Lenski lab / Barrick lab)
+# =============================================================================
+
+[[sources]]
+id = "ltee_fitness_50k"
+database = "Dryad"
+description = "LTEE 50,000-generation fitness trajectory data — Wiser et al. 2013"
+accessions = ["doi:10.5061/dryad.3ph91"]
+url = "https://datadryad.org/stash/dataset/doi:10.5061/dryad.3ph91"
+format = "csv"
+blake3 = ""
+retrieved = ""
+paper = "B2"
+notes = "12-population fitness trajectories (50K gens) — power-law vs hyperbolic model selection. groundSpring B2 reproduction source."
+
+[[sources]]
+id = "ltee_genome_mutations"
+database = "NCBI SRA / BioProject"
+description = "LTEE whole-genome sequencing — Tenaillon et al. 2016 mutation accumulation"
+accessions = ["PRJNA295606"]
+url = "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA295606"
+format = "fastq"
+blake3 = ""
+retrieved = ""
+paper = "B1"
+notes = "Genome-wide mutation data for 12 LTEE populations across 50K generations."
+
+[[sources]]
+id = "ltee_citrate_genomics"
+database = "NCBI SRA"
+description = "Cit+ evolution — Blount et al. 2012 genomic basis of evolutionary innovation"
+accessions = ["SRP012543"]
+url = "https://www.ncbi.nlm.nih.gov/sra/SRP012543"
+format = "fastq"
+blake3 = ""
+retrieved = ""
+paper = "02"
+notes = "Genomic basis of the Cit+ phenotype — potentiating and actualizing mutations."
+
+# =============================================================================
+# B5: Symbiont PK/PD (Leonard et al. 2024)
+# =============================================================================
+
+[[sources]]
+id = "snodgrassella_genome"
+database = "NCBI Genome"
+description = "Snodgrassella alvi wkB2 reference genome — bee gut symbiont"
+accessions = ["GCA_000497785"]
+url = "https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_000497785.1/"
+format = "fasta"
+blake3 = ""
+retrieved = ""
+paper = "B5"
+notes = "Reference genome for the engineered gut symbiont in Leonard 2024."
+
+[[sources]]
+id = "bee_gut_microbiome"
+database = "NCBI SRA"
+description = "Apis mellifera gut microbiome 16S/metagenome surveys"
+accessions = ["PRJNA480089"]
+url = "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA480089"
+format = "fastq"
+blake3 = ""
+retrieved = ""
+paper = "B5"
+notes = "Community context for symbiont colonization dynamics — 5 core species."
+
+[[sources]]
+id = "dsrna_delivery_literature"
+database = "PubMed"
+description = "dsRNA delivery pharmacokinetics in insect models — review references"
+accessions = ["PMID:36460701"]
+url = "https://pubmed.ncbi.nlm.nih.gov/36460701/"
+format = "review"
+blake3 = ""
+retrieved = ""
+paper = "B5"
+notes = "PK parameters for symbiont-produced dsRNA: elimination rates, bioavailability estimates."
+
+# =============================================================================
+# E2: HOLIgraph — protein-ligand binding (Mardikoraem & Woldring 2025)
+# =============================================================================
+
+[[sources]]
+id = "oatp_transporter_structures"
+database = "PDB / UniProt"
+description = "OATP1B1/1B3 transporter crystal structures for drug interaction modeling"
+accessions = ["7NWO", "7WSN"]
+url = "https://www.rcsb.org/structure/7NWO"
+format = "pdb"
+blake3 = ""
+retrieved = ""
+paper = "E2"
+notes = "Structural basis for OATP PK/PD bridge predictions."
+
+[[sources]]
+id = "chembl_oatp_ligands"
+database = "ChEMBL"
+description = "OATP substrate/inhibitor binding assay data from ChEMBL"
+accessions = ["CHEMBL4105888"]
+url = "https://www.ebi.ac.uk/chembl/target_report_card/CHEMBL4105888/"
+format = "csv"
+blake3 = ""
+retrieved = ""
+paper = "E2"
+notes = "IC50/Ki data for OATP-interacting compounds — training set for HOLIgraph."
+
+# =============================================================================
+# E4: Macrocyclic peptide screening (Woldring Lab 2024)
+# =============================================================================
+
+[[sources]]
+id = "macrocyclic_peptide_library"
+database = "PDB"
+description = "Macrocyclic peptide structural templates from PDB"
+accessions = ["4KNT", "5TPW", "6OHV"]
+url = "https://www.rcsb.org/structure/4KNT"
+format = "pdb"
+blake3 = ""
+retrieved = ""
+paper = "E4"
+notes = "Cyclic peptide scaffolds for ADDRC reference compound screening."
+
+[[sources]]
+id = "addrc_reference_compounds"
+database = "WADA"
+description = "Anti-Doping Reference Compound catalog — prohibited substance reference standards"
+accessions = []
+url = "https://www.wada-ama.org/en/prohibited-list"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "E4"
+notes = "Reference panel for validating macrocyclic peptide screening specificity."
+
+[[sources]]
+id = "drugbank_peptide_pk"
+database = "DrugBank"
+description = "Pharmacokinetic parameters for approved peptide therapeutics"
+accessions = ["DB00091", "DB06196"]
+url = "https://go.drugbank.com/"
+format = "json"
+blake3 = ""
+retrieved = ""
+paper = "E4"
+notes = "PK reference data for cyclic peptide comparisons."
+
+# =============================================================================
+# Cross-thread: Dolson AVIDA digital evolution
+# =============================================================================
+
+[[sources]]
+id = "avida_digital_evolution"
+database = "GitHub"
+description = "AVIDA digital evolution platform — Dolson lab extensions for eco-evolutionary dynamics"
+accessions = []
+url = "https://github.com/devosoft/avida"
+format = "source"
+blake3 = ""
+retrieved = ""
+paper = "10a"
+notes = "Digital evolution framework for in-silico LTEE reproductions."
