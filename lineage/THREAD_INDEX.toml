@@ -47,10 +47,10 @@ basecamp_papers = ["12", "13"]
 springs = ["wetSpring", "airSpring", "healthSpring"]
 contacts = ["Gonzales", "Lisabeth", "Neubig"]
 external_lineages = ["Gonzales JAK/mAb Series (G1-G6)"]
-expression = ""
-data_sources = ""
-data_targets = ""
-status = "mapped"
+expression = "expressions/IMMUNO_DRUG_DISCOVERY.md"
+data_sources = "data/sources/thread03_immuno.toml"
+data_targets = "data/targets/thread03_immuno_targets.toml"
+status = "active"
 
 [[threads]]
 id = 4
@@ -120,7 +120,7 @@ external_lineages = ["Mok Clinical Series (9 experiments)"]
 expression = "expressions/SOVEREIGN_HEALTH.md"
 data_sources = "data/sources/thread08_health.toml"
 data_targets = "data/targets/thread08_health_targets.toml"
-status = "seeded"
+status = "active"
 
 [[threads]]
 id = 9
@@ -130,7 +130,7 @@ basecamp_papers = ["17", "18", "19", "24a"]
 springs = ["ludoSpring"]
 contacts = []
 external_lineages = ["Fitts (1954)", "Hick (1952)", "Accot-Zhai (1997)", "Perlin (1985)", "Lindenmayer (1968)", "Lazzaro (2004)"]
-expression = ""
+expression = "expressions/GAMING_CREATIVE_SCIENCE.md"
 data_sources = "data/sources/thread09_gaming.toml"
 data_targets = "data/targets/thread09_gaming_targets.toml"
 status = "active"
@@ -143,10 +143,10 @@ basecamp_papers = ["20", "21", "22"]
 springs = ["ludoSpring", "primalSpring"]
 contacts = []
 external_lineages = []
-expression = ""
-data_sources = ""
-data_targets = ""
-status = "mapped"
+expression = "expressions/PROVENANCE_ECONOMICS.md"
+data_sources = "data/sources/thread10_provenance.toml"
+data_targets = "data/targets/thread10_provenance_targets.toml"
+status = "active"
 
 # --- Product Focus Mapping ---
 

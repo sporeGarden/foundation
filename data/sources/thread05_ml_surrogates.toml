@@ -1,0 +1,213 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Data sources for Thread 5: ML Surrogates & Evolutionary Dynamics
+# neuralSpring's validated ML/surrogate science — LSTM, ESN, transformer,
+# DeepONet, PINN across evolutionary biology and physics domains.
+
+[meta]
+thread = 5
+thread_name = "ML Surrogates & Evolutionary Dynamics"
+expression = "expressions/ML_SURROGATES.md"
+last_updated = "2026-05-11"
+total_sources = 15
+cross_cutting = false
+
+# =============================================================================
+# Evolutionary Biology Reproductions (Dolson Lab, MSU CSE)
+# =============================================================================
+
+[[sources]]
+id = "dolson_counterdiabatic_2020"
+database = "Nature Physics"
+description = "Iram, Dolson et al. (2020) Controlling evolution with counterdiabatic driving"
+accessions = []
+url = "https://doi.org/10.1038/s41567-020-0876-4"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "011"
+notes = "NK fitness landscapes. CD protocol vs linear schedule. neuralSpring Paper 011 (11/11 PASS)."
+
+[[sources]]
+id = "dolson_modes_2019"
+database = "Artificial Life"
+description = "Dolson et al. (2019) MODES Toolbox for open-ended evolution metrics"
+accessions = []
+url = "https://doi.org/10.1162/artl_a_00280"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "012"
+notes = "4 open-endedness metrics. neuralSpring Paper 012 (9/9 PASS)."
+
+[[sources]]
+id = "dolson_ecology_2018"
+database = "GECCO"
+description = "Dolson & Ofria (2018) Ecological theory for evolutionary computation"
+accessions = []
+url = "https://doi.org/10.1145/3205455.3205523"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "013"
+notes = "Competitive exclusion + niche differentiation. neuralSpring Paper 013 (7/7 PASS)."
+
+[[sources]]
+id = "dolson_directed_evo_2022"
+database = "eLife"
+description = "Dolson et al. (2022) Artificial selection for directed evolution of microbes"
+accessions = []
+url = "https://doi.org/10.7554/eLife.79665"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "014"
+notes = "Lexicase selection. neuralSpring Paper 014 (8/8 PASS)."
+
+[[sources]]
+id = "foreback_dolson_swarm_2025"
+database = "IEEE"
+description = "Foreback & Dolson (2025) Heterogeneous controller representations for swarm robotics"
+accessions = []
+url = ""
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "015"
+notes = "Het vs hom swarm controllers. neuralSpring Paper 015 (11/11 PASS)."
+
+# =============================================================================
+# ML Architecture Reproductions
+# =============================================================================
+
+[[sources]]
+id = "raissi_pinn_2019"
+database = "Journal of Computational Physics"
+description = "Raissi et al. (2019) Physics-informed neural networks"
+accessions = []
+url = "https://doi.org/10.1016/j.jcp.2018.10.045"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "006"
+notes = "PINN Burgers equation. neuralSpring Study 001 (6/6 PASS)."
+
+[[sources]]
+id = "lu_deeponet_2021"
+database = "Nature Machine Intelligence"
+description = "Lu et al. (2021) Learning nonlinear operators via DeepONet"
+accessions = []
+url = "https://doi.org/10.1038/s42256-021-00302-5"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "007"
+notes = "Branch-trunk architecture. neuralSpring Study 002 (5/5 PASS)."
+
+[[sources]]
+id = "lecun_lenet_1998"
+database = "Proceedings of the IEEE"
+description = "LeCun et al. (1998) Gradient-based learning for document recognition"
+accessions = []
+url = "https://doi.org/10.1109/5.726791"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "008"
+notes = "LeNet-5 MNIST. neuralSpring Study 003 (5/5 PASS)."
+
+# =============================================================================
+# Cross-Domain Surrogate Learning
+# =============================================================================
+
+[[sources]]
+id = "chuna_glucose_2020"
+database = "arXiv"
+description = "Chuna (2020) LSTM predictive capacity for T1D blood glucose"
+accessions = []
+url = "https://arxiv.org/abs/2005.09051"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "026"
+notes = "LSTM biomedical time series. neuralSpring Paper 026 (26/26 PASS)."
+
+[[sources]]
+id = "wang_digestion_2020"
+database = "Bioresource Technology"
+description = "Wang et al. (2020) ML prediction of anaerobic digestion performance"
+accessions = []
+url = "https://doi.org/10.1016/j.biortech.2019.122495"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "027"
+notes = "ESN bioprocess engineering. neuralSpring Paper 027 (36/36 Rust + 23/23 GPU PASS)."
+
+# =============================================================================
+# WDM Surrogate Physics
+# =============================================================================
+
+[[sources]]
+id = "militzer_fpeos"
+database = "Literature"
+description = "Militzer et al. FPEOS tables for warm dense matter equation of state"
+accessions = []
+url = ""
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "nW-02"
+notes = "EOS surrogate P(rho,T). neuralSpring nW-02 (36/36 Rust + 15/15 GPU PASS)."
+
+[[sources]]
+id = "stanton_murillo_transport"
+database = "Literature"
+description = "Stanton & Murillo transport model for classical to WDM regime"
+accessions = []
+url = ""
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "nW-01"
+notes = "Transport surrogate D*, eta*, lambda*. neuralSpring nW-01 (30/30 PASS)."
+
+# =============================================================================
+# LTEE ML Prediction (B1 — Barrick 2009)
+# =============================================================================
+
+[[sources]]
+id = "barrick_2009_mutation"
+database = "Nature"
+description = "Barrick et al. (2009) Genome evolution in a long-term experiment with E. coli"
+accessions = []
+url = "https://doi.org/10.1038/nature08480"
+format = "reference"
+blake3 = ""
+retrieved = ""
+paper = "B1"
+notes = "LTEE mutation accumulation. neuralSpring B1 baseline (8/8 PASS)."
+
+[[sources]]
+id = "era5_open_meteo"
+database = "Open-Meteo"
+description = "ERA5 reanalysis archive — meteorological time series for LSTM validation"
+accessions = []
+url = "https://archive-api.open-meteo.com/"
+format = "api"
+blake3 = ""
+retrieved = ""
+paper = "009"
+notes = "CC BY 4.0. LSTM weather prediction. neuralSpring Exp 009 (5/5 PASS, NSE=0.849)."
+
+[[sources]]
+id = "mnist_torchvision"
+database = "Torchvision"
+description = "MNIST handwritten digits dataset for LeNet-5 validation"
+accessions = []
+url = "http://yann.lecun.com/exdb/mnist/"
+format = "images"
+blake3 = ""
+retrieved = ""
+paper = "008"
+notes = "CC BY-SA 3.0. 60K train + 10K test. neuralSpring Study 003 (98.89% accuracy)."

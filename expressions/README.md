@@ -22,6 +22,14 @@ for the domain they care about.
 | Expression | Thread | Status |
 |-----------|--------|--------|
 | `ABG_WHOLE_CELL_REBUILD.md` | Thread 1: Whole-Cell Modeling | Active |
+| `PLASMA_QCD_SOVEREIGN_GPU.md` | Thread 2: Plasma Physics / Lattice QCD | Active |
+| `IMMUNO_DRUG_DISCOVERY.md` | Thread 3: Immunology / Drug Discovery | Active |
+| `ENVIRONMENTAL_GENOMICS.md` | Thread 4: Environmental Genomics / Field Science | Active |
+| `ML_SURROGATES.md` | Thread 5: Evolutionary Biology / LTEE | Active |
+| `MEASUREMENT_SCIENCE.md` | Threads 6 & 7: Agricultural Science / Anderson Math | Active |
+| `SOVEREIGN_HEALTH.md` | Thread 8: Human Health / Clinical | Active |
+| `GAMING_CREATIVE_SCIENCE.md` | Thread 9: Gaming / Creative | Active |
+| `PROVENANCE_ECONOMICS.md` | Thread 10: Provenance / Economics | Active |
 
 ## How to Author a New Expression
 

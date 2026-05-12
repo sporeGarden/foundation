@@ -8,7 +8,7 @@ thread = 7
 thread_name = "Anderson Mathematics"
 expression = "expressions/MEASUREMENT_SCIENCE.md"
 last_updated = "2026-05-08"
-total_targets = 18
+total_targets = 24
 
 # =============================================================================
 # Anderson Localization — Lyapunov Exponents (Exp 008)
@@ -243,5 +243,81 @@ unit = "boolean"
 tolerance = 0.0
 source = "groundSpring Exp 095, measurement niche validation"
 spring = "groundSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# neuralSpring: Anderson Spectral Diagnostics for Neural Networks
+# =============================================================================
+
+[[targets]]
+id = "ns_weight_hamiltonian_ipr"
+paper = "baseCamp_nS-01"
+description = "Weight matrix as Hamiltonian: IPR validates localization in trained networks"
+expected_value = 1.0
+unit = "boolean_pass"
+tolerance = 0.0
+source = "neuralSpring nS-101..106, 21/21 PASS"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "ns_information_flow_spectral"
+paper = "baseCamp_nS-02"
+description = "Information flow as wave propagation in neural lattices"
+expected_value = 1.0
+unit = "boolean_pass"
+tolerance = 0.0
+source = "neuralSpring nS-201..206, 22/22 PASS"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "ns_loss_landscape_hessian"
+paper = "baseCamp_nS-03"
+description = "Loss landscape eigenspectrum matches analytical quadratic"
+expected_value = 1.0
+unit = "boolean_pass"
+tolerance = 0.0
+source = "neuralSpring nS-301..305, 27/27 PASS"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "ns_multiagent_anderson_threshold"
+paper = "baseCamp_nS-05"
+description = "Multi-agent coordination Anderson threshold predicts phase transitions"
+expected_value = 1.0
+unit = "boolean_pass"
+tolerance = 0.0
+source = "neuralSpring nS-501..505, 23/23 PASS"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "ns_immunological_anderson_3d"
+paper = "baseCamp_nS-06"
+description = "3D immunological Anderson localization validates W_c estimate"
+expected_value = 16.5
+unit = "W_c_dimensionless"
+tolerance = 1.0
+source = "neuralSpring nS-601..605, 53/53 PASS"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "ns_evoformer_spectral"
+paper = "coralForge_nF-01"
+description = "Evoformer attention spectral properties validated against AlphaFold2"
+expected_value = 1.0
+unit = "boolean_pass"
+tolerance = 0.0
+source = "neuralSpring nF-01, Py 25/25 + Rs 67/67 + GPU 37/37 PASS"
+spring = "neuralSpring"
 blake3 = ""
 validated = true

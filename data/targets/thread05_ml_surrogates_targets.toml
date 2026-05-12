@@ -1,0 +1,175 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Validation targets for Thread 5: ML Surrogates & Evolutionary Dynamics
+# Expected results neuralSpring has validated across paper reproductions.
+
+[meta]
+thread = 5
+thread_name = "ML Surrogates & Evolutionary Dynamics"
+expression = "expressions/ML_SURROGATES.md"
+last_updated = "2026-05-11"
+total_targets = 12
+
+# =============================================================================
+# LSTM Time-Series Prediction
+# =============================================================================
+
+[[targets]]
+id = "lstm_weather_nse"
+paper = "Exp_009"
+description = "LSTM weather prediction Nash-Sutcliffe Efficiency on ERA5 data"
+expected_value = 0.849
+unit = "NSE"
+tolerance = 0.05
+source = "neuralSpring Exp 009, 4 years Michigan ERA5 temperature"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "lstm_glucose_r2"
+paper = "Paper_026"
+description = "LSTM blood glucose prediction R² on synthetic CGM data"
+expected_value = 0.98
+unit = "R_squared"
+tolerance = 0.02
+source = "neuralSpring Paper 026, Chuna 2020 reproduction"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# ESN Regime Classification
+# =============================================================================
+
+[[targets]]
+id = "esn_wdm_accuracy"
+paper = "nW-05"
+description = "ESN WDM regime classifier accuracy (classical/WDM/degenerate)"
+expected_value = 0.965
+unit = "fraction"
+tolerance = 0.02
+source = "neuralSpring nW-05, ridge readout + 2-step ESN recurrence"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "esn_digestion_r2"
+paper = "Paper_027"
+description = "ESN anaerobic digestion prediction R²"
+expected_value = 0.84
+unit = "R_squared"
+tolerance = 0.05
+source = "neuralSpring Paper 027, Wang 2020 reproduction"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# WDM Surrogate Physics
+# =============================================================================
+
+[[targets]]
+id = "wdm_transport_mlp"
+paper = "nW-01"
+description = "MLP transport surrogate for D*, eta*, lambda* vs (rho, T, Z*)"
+expected_value = 1.0
+unit = "boolean_pass"
+tolerance = 0.0
+source = "neuralSpring nW-01, Stanton-Murillo model (30/30 PASS)"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "wdm_eos_surrogate"
+paper = "nW-02"
+description = "MLP EOS surrogate P(rho,T), E(rho,T) for H/He/C"
+expected_value = 1.0
+unit = "boolean_pass"
+tolerance = 0.0
+source = "neuralSpring nW-02, FPEOS tables (36/36 Rust + 15/15 GPU PASS)"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "wdm_sqw_plasmon"
+paper = "nW-03"
+description = "LSTM S(q,w) peak predictor for plasmon frequency"
+expected_value = 0.98
+unit = "R_squared"
+tolerance = 0.02
+source = "neuralSpring nW-03, MD density fluctuation time series"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# Evolutionary Biology Reproductions
+# =============================================================================
+
+[[targets]]
+id = "counterdiabatic_outperforms_linear"
+paper = "Paper_011"
+description = "CD protocol outperforms naive linear schedule on NK landscapes"
+expected_value = 1.0
+unit = "boolean_pass"
+tolerance = 0.0
+source = "neuralSpring Paper 011, Dolson 2020 (11/11 PASS)"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "modes_discrimination"
+paper = "Paper_012"
+description = "All 4 MODES metrics discriminate open-ended vs closed evolution"
+expected_value = 1.0
+unit = "boolean_pass"
+tolerance = 0.0
+source = "neuralSpring Paper 012, Dolson 2019 (9/9 PASS)"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "lexicase_diversity"
+paper = "Paper_014"
+description = "Lexicase selection preserves diversity while improving fitness"
+expected_value = 1.0
+unit = "boolean_pass"
+tolerance = 0.0
+source = "neuralSpring Paper 014, Dolson 2022 (8/8 PASS)"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+# =============================================================================
+# LTEE ML Prediction (B1)
+# =============================================================================
+
+[[targets]]
+id = "ltee_b1_mutation_rate"
+paper = "B1"
+description = "LTEE Ara-1 mutation accumulation rate from Barrick 2009"
+expected_value = 0.003592
+unit = "mutations_per_generation"
+tolerance = 0.001
+source = "neuralSpring B1 baseline, linear fit to published data"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
+
+[[targets]]
+id = "ltee_b1_sublinear_exponent"
+paper = "B1"
+description = "Power-law exponent for mutation accumulation (sublinear < 1.0)"
+expected_value = 0.8213
+unit = "dimensionless"
+tolerance = 0.1
+source = "neuralSpring B1 baseline, log-log fit to published data"
+spring = "neuralSpring"
+blake3 = ""
+validated = true
