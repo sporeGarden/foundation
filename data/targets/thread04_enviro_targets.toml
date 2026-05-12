@@ -7,9 +7,9 @@
 [meta]
 thread = 4
 thread_name = "Environmental Genomics & Field Science"
-expression = ""
-last_updated = "2026-05-11"
-total_targets = 12
+expression = "expressions/ENVIRONMENTAL_GENOMICS.md"
+last_updated = "2026-05-12"
+total_targets = 13
 
 # =============================================================================
 # Anderson QS Framework (Papers 01, 05, 06)
@@ -172,3 +172,20 @@ spring = "wetSpring"
 blake3 = ""
 validated = true
 notes = "wetSpring Exp356: 18 checks. W_c refined with O₂ dimension."
+
+# =============================================================================
+# Soil-Immune Coupling (LTEE E3, Dolgikh 2025) — airSpring
+# =============================================================================
+
+[[targets]]
+id = "fls2_soil_immune_coupling"
+paper = "E3"
+description = "FLS2 soil-immune coupling: Kd shift 28→15 nM, Q10 temp factor, moisture threshold validated"
+expected_value = 1.0
+unit = "binary (all 29 checks pass)"
+tolerance = 0.0
+source = "Dolgikh et al. 2025 — LTEE E3 FLS2 plant immunity sentinel"
+spring = "airSpring"
+blake3 = ""
+validated = true
+notes = "airSpring validate_ltee_fls2: Python 12/12 + Rust 29/29 PASS. Langmuir/Hill/two-site binding, glycosylation Kd shift, soil-immune coupling model."
