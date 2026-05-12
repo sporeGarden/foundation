@@ -74,12 +74,12 @@ id = 5
 name = "Evolutionary Biology / LTEE"
 short = "ltee"
 basecamp_papers = ["02", "10a"]
-springs = ["neuralSpring", "groundSpring", "wetSpring"]
-contacts = ["Dolson", "Waters", "Barrick"]
-external_lineages = ["Barrick 2009 LTEE Mutation Accumulation"]
-expression = "expressions/ML_SURROGATES.md"
-data_sources = "data/sources/thread05_ml_surrogates.toml"
-data_targets = "data/targets/thread05_ml_surrogates_targets.toml"
+springs = ["wetSpring", "neuralSpring", "groundSpring", "hotSpring", "healthSpring", "airSpring"]
+contacts = ["Dolson", "Waters"]
+external_lineages = ["Lenski LTEE frozen fossil collection", "Barrick Lab UT Austin"]
+expression = "expressions/LTEE_EVOLUTIONARY_DYNAMICS.md"
+data_sources = "data/sources/thread05_ltee.toml"
+data_targets = "data/targets/thread05_ltee_targets.toml"
 status = "active"
 
 [[threads]]
