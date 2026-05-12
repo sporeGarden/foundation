@@ -109,9 +109,98 @@ and spectral reconstruction methods.
 29 publication-grade Python baseline notebooks in `notebooks/baselines/`
 plus 5 sporePrint summary notebooks in `notebooks/`.
 
+## airSpring — Agricultural Science (Thread 6)
+
+airSpring is the **first spring with publishable paper notebooks** — 20 Jupyter
+notebooks covering 20 core papers across 4 domains, plus 5 sporePrint summary
+notebooks. This positions Thread 6 as the most notebook-complete thread.
+
+**Status**: 87 experiments, 1,364 Rust tests, 91 binaries, 60 tolerances, 44/44
+IPC capabilities, 14.3x Rust-vs-Python speedup, guideStone Level 0.
+
+### Validated Domains (20 papers, 36 targets)
+
+| Domain | Papers | Checks | Key Methods |
+|--------|--------|--------|-------------|
+| ET₀ Methods (8) | FAO-56 PM, PT, Thornthwaite, Hargreaves, Makkink, Turc, Hamon, Blaney-Criddle | 300+ | 8 peer-reviewed methods, 75/75 cross-validated |
+| Irrigation & Water Balance (6) | FAO-56 Ch 7/8, Stewart 1977, Dong 2020, Atlas 100-station, Saxton-Rawls | 1700+ | Dual Kc, yield response, 80yr integration |
+| Soil Physics (4) | Richards 1D (VG-Mualem), Biochar isotherms, SCS-CN, Green-Ampt | 500+ | Newton-Raphson, Langmuir/Freundlich, ponding time |
+| Analysis (2) | SPI drought index, ET₀ sensitivity (OAT) | 60+ | Gamma MLE, one-at-a-time ±10% |
+
+### 20 Paper Notebooks
+
+All in `notebooks/papers/` following `PAPER_NOTEBOOK_PATTERN.md`:
+
+| # | Notebook | Citation |
+|---|----------|----------|
+| 001 | FAO-56 Penman-Monteith ET₀ | Allen et al. 1998 |
+| 002 | Soil Sensor Calibration | Dong et al. 2020 |
+| 004 | FAO-56 Water Balance | Allen et al. 1998 Ch 8 |
+| 006 | Richards Equation (VG-Mualem) | Richards 1931, van Genuchten 1980 |
+| 007 | Biochar P Adsorption | Kumari et al. 2025 |
+| 008 | Yield Response (Stewart) | Stewart et al. 1977 |
+| 009 | Dual Crop Coefficient | Allen et al. 1998 Ch 7 |
+| 017 | ET₀ Sensitivity Analysis | Gong et al. 2006 |
+| 018 | Michigan Crop Water Atlas | Open-Meteo ERA5 |
+| 019 | Priestley-Taylor ET₀ | Priestley & Taylor 1972 |
+| 021 | Thornthwaite ET₀ | Thornthwaite 1948 |
+| 023 | Saxton-Rawls PTFs | Saxton & Rawls 2006 |
+| 031 | Hargreaves-Samani ET₀ | Hargreaves & Samani 1985 |
+| 033 | Makkink ET₀ | Makkink 1957 |
+| 034 | Turc ET₀ | Turc 1961 |
+| 035 | Hamon PET | Hamon 1961 |
+| 049 | Blaney-Criddle PET | Blaney & Criddle 1950 |
+| 050 | SCS Curve Number | USDA 1972 |
+| 051 | Green-Ampt Infiltration | Green & Ampt 1911 |
+| 081 | SPI Drought Index | McKee et al. 1993 |
+
+### airSpring Primal Composition
+
+airSpring consumes 9 primals via IPC (44 capabilities):
+
+| Primal | Role | Key Capabilities |
+|--------|------|-----------------|
+| beardog | Security | crypto.hash, identity.whoami |
+| songbird | Discovery | discovery.find_primals |
+| toadstool | Compute | compute.dispatch, compute.offload |
+| barracuda | GPU Math | tensor.matmul, stats.mean |
+| coralreef | Shaders | shader.compile (roadmap) |
+| nestgate | Data | storage.store/retrieve |
+| squirrel | AI | inference.complete (roadmap) |
+| biomeos | Orchestration | capability.call, graph.execute |
+| petaltongue | UI | visualization (graph-level) |
+
+### Sediment Contribution (Thread 6)
+
+airSpring deposits the **agricultural science layer** — ET₀ methods,
+soil hydraulics, irrigation scheduling, and crop yield response. When
+groundSpring computes measurement uncertainty, it inherits airSpring's
+FAO-56 validation. When wetSpring models soil microbiomes, it uses
+airSpring's Richards equation and soil moisture profiles. The Michigan
+Crop Water Atlas (100 stations, 80 years) is the largest single-station
+validation in the ecosystem.
+
+### Foundation Targets + Workloads
+
+- **36 validation targets** in `data/targets/thread06_ag_targets.toml`
+- **6 toadStool workloads** in `workloads/thread06_ag/`:
+  - `airspring-et0-fao56.toml` — 75/75 PM cross-validated
+  - `airspring-et0-methods.toml` — 8 methods suite
+  - `airspring-water-balance.toml` — Ch 8 + dual Kc + yield
+  - `airspring-soil-physics.toml` — Richards + GA + SCS-CN + PTF
+  - `airspring-atlas-pipeline.toml` — 100 stations, 80 years
+  - `airspring-full-suite.toml` — all 87 experiments
+
+### Penny Irrigation — The Product Vision
+
+The agricultural science thread converges on Penny Irrigation: sovereign
+scheduling on consumer hardware ($600 GPU + $99 NPU). Sensor → NPU edge
+inference → NUCLEUS mesh → irrigation valve. No cloud, no subscription,
+farmer-owned from sensor to valve.
+
 ## What's Next
 
-- **Thread 6 data sources**: Wire NOAA GHCN-Daily + NCBI SRA + IRIS FDSN
+- **Thread 6 live data**: Wire NOAA GHCN-Daily + NCBI SRA + IRIS FDSN
   into `fetch_sources.sh` with `--thread ag`
 - **Thread 7 Anderson sources**: Literature references already mapped;
   numerical targets are all validated
@@ -119,3 +208,5 @@ plus 5 sporePrint summary notebooks in `notebooks/`.
   NUCLEUS composition is deployed on ironGate
 - **Cross-thread metamorphism**: Anderson results overlap Threads 2, 3, 4,
   5 — meta-validation when those springs complete their baselines
+- **airSpring guideStone L1**: Scaffold binary reading downstream_manifest.toml
+- **Notebook elevation**: Tier 0→1 (parse validation binary output in notebooks)

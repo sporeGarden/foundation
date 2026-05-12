@@ -1,0 +1,16 @@
+[metadata]
+name = "airspring-et0-methods"
+description = "8 ET₀ methods: PM, PT, Thornthwaite, Hargreaves, Makkink, Turc, Hamon, Blaney-Criddle"
+version = "0.1.0"
+
+[execution]
+type = "native"
+command = "${AIRSPRING_ROOT}/target/release/airspring validate --scenario et0-methods"
+working_dir = "${AIRSPRING_ROOT}"
+
+[resources]
+max_memory_bytes = 4294967296
+max_cpu_percent = 80.0
+
+[security]
+isolation_level = "None"

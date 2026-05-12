@@ -1,0 +1,16 @@
+[metadata]
+name = "airspring-full-suite"
+description = "Complete airSpring validation — 87 experiments, 60 tolerances, all domains"
+version = "0.1.0"
+
+[execution]
+type = "native"
+command = "${AIRSPRING_ROOT}/target/release/airspring validate --scenario paper-chain"
+working_dir = "${AIRSPRING_ROOT}"
+
+[resources]
+max_memory_bytes = 16106127360
+max_cpu_percent = 80.0
+
+[security]
+isolation_level = "None"

@@ -1,0 +1,16 @@
+[metadata]
+name = "airspring-water-balance"
+description = "FAO-56 Chapter 8 daily soil water balance + dual Kc + Stewart yield response"
+version = "0.1.0"
+
+[execution]
+type = "native"
+command = "${AIRSPRING_ROOT}/target/release/airspring validate --scenario water-balance"
+working_dir = "${AIRSPRING_ROOT}"
+
+[resources]
+max_memory_bytes = 4294967296
+max_cpu_percent = 80.0
+
+[security]
+isolation_level = "None"

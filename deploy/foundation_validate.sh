@@ -346,7 +346,7 @@ print(d.get('execution', {}).get('command', ''))
 }
 
 if [[ "$THREAD_FILTER" == "all" ]]; then
-    SCAN_DIRS=("$WORKLOAD_DIR"/thread*)
+    SCAN_DIRS=("$WORKLOAD_DIR"/thread* "$WORKLOAD_DIR"/groundspring "$WORKLOAD_DIR"/airspring "$WORKLOAD_DIR"/wetspring "$WORKLOAD_DIR"/hotspring "$WORKLOAD_DIR"/healthspring "$WORKLOAD_DIR"/neuralspring "$WORKLOAD_DIR"/ludospring)
 else
     SCAN_DIRS=("$WORKLOAD_DIR/thread"*"$THREAD_FILTER"*)
 fi

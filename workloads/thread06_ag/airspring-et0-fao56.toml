@@ -1,0 +1,16 @@
+[metadata]
+name = "airspring-et0-fao56"
+description = "FAO-56 Penman-Monteith reference evapotranspiration — 75/75 cross-validated checks"
+version = "0.1.0"
+
+[execution]
+type = "native"
+command = "${AIRSPRING_ROOT}/target/release/airspring validate --scenario fao56-et0"
+working_dir = "${AIRSPRING_ROOT}"
+
+[resources]
+max_memory_bytes = 4294967296
+max_cpu_percent = 80.0
+
+[security]
+isolation_level = "None"
