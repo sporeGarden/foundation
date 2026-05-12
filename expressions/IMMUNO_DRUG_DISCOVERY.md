@@ -2,10 +2,11 @@
 # Immunology, Drug Discovery & Clinical Translation — Thread 3 Expression
 
 **Thread**: 3 — Immunology / Drug Discovery
+**Status:** Active (expression + 18 data sources + 12 validated targets)
 **Springs**: wetSpring, airSpring, healthSpring
 **Contacts**: Gonzales (MSU Pharmacology), Lisabeth (ADDRC), Neubig (Drug Discovery)
 **baseCamp Papers**: 12, 13, 22
-**Date**: May 11, 2026
+**Date**: May 12, 2026
 
 ---
 

@@ -2,8 +2,9 @@
 # Sovereign Health — Thread 8 Expression
 
 **Thread**: 8 — Human Health & Clinical Translation
-**Spring**: healthSpring (V62, 999 tests, 87 capabilities, 95 experiments)
-**Date**: May 11, 2026
+**Status:** Active (expression + data sources + data targets populated; LTEE B5 Tier 1 Rust binary shipped)
+**Spring**: healthSpring (V63, 999 tests, 87 capabilities, 95 experiments)
+**Date**: May 12, 2026
 
 ---
 
