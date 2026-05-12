@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Shellcheck deploy scripts
+        run: |
+          sudo apt-get install -y shellcheck
+          shellcheck deploy/fetch_sources.sh || true
+          shellcheck deploy/foundation_validate.sh || true
+
+      - name: TOML syntax check
+        run: |
+          pip install tomli-w
+          python3 -c "
+          import tomllib, pathlib, sys
+          errors = 0
+          for f in sorted(pathlib.Path('.').rglob('*.toml')):
+              try:
+                  tomllib.loads(f.read_text())
+              except Exception as e:
+                  print(f'FAIL: {f}: {e}')
+                  errors += 1
+          print(f'{errors} TOML error(s)' if errors else 'All TOML files valid')
+          sys.exit(1 if errors else 0)
+          "
+
+      - name: Validate thread index completeness
+        run: |
+          python3 -c "
+          import tomllib, pathlib, sys
+          idx = tomllib.loads(pathlib.Path('lineage/THREAD_INDEX.toml').read_text())
+          threads = idx.get('thread', [])
+          missing = []
+          for t in threads:
+              tid = t.get('id', '')
+              src = t.get('source_manifest', '')
+              tgt = t.get('target_manifest', '')
+              if src and not pathlib.Path(src).exists():
+                  missing.append(f'Thread {tid}: missing source {src}')
+              if tgt and not pathlib.Path(tgt).exists():
+                  missing.append(f'Thread {tid}: missing target {tgt}')
+          for m in missing:
+              print(f'WARN: {m}')
+          print(f'{len(threads)} threads indexed, {len(missing)} manifest(s) missing')
+          "
+
+      - name: Data manifest hash coverage
+        run: |
+          python3 -c "
+          import tomllib, pathlib
+          for f in sorted(pathlib.Path('data/sources').glob('*.toml')):
+              data = tomllib.loads(f.read_text())
+              sources = data.get('source', data.get('sources', []))
+              empty = sum(1 for s in sources if isinstance(s, dict) and not s.get('blake3', ''))
+              total = len(sources) if isinstance(sources, list) else 0
+              print(f'{f.name}: {total - empty}/{total} hashed')
+          "

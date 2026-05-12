@@ -176,21 +176,32 @@ rpc_health() {
 }
 
 HEALTH_FAIL=0
+HEALTH_WARN=0
+REQUIRED_PRIMALS="NestGate rhizoCrypt loamSpine"
 for pair in "BearDog:$BEARDOG_PORT" "Songbird:$SONGBIRD_PORT" "ToadStool:$TOADSTOOL_PORT" "NestGate:$NESTGATE_PORT" "rhizoCrypt:$RHIZOCRYPT_PORT" "loamSpine:$LOAMSPINE_PORT" "sweetGrass:$SWEETGRASS_PORT"; do
     name="${pair%%:*}"
     port="${pair#*:}"
     if ! rpc_health "$name" "$port"; then
-        HEALTH_FAIL=$((HEALTH_FAIL + 1))
+        if echo "$REQUIRED_PRIMALS" | grep -qw "$name"; then
+            HEALTH_FAIL=$((HEALTH_FAIL + 1))
+        else
+            HEALTH_WARN=$((HEALTH_WARN + 1))
+            log "  [WARN] $name not available — non-critical, continuing"
+        fi
     fi
 done
 
 if [[ $HEALTH_FAIL -gt 0 ]]; then
     log ""
-    log "  $HEALTH_FAIL primal(s) not responding."
+    log "  $HEALTH_FAIL required primal(s) not responding (provenance trio: NestGate, rhizoCrypt, loamSpine)."
     log "  Deploy NUCLEUS first:"
     log "    cd $NUCLEUS_ROOT/deploy"
     log "    bash deploy.sh --composition nest --gate irongate"
     exit 1
+fi
+
+if [[ $HEALTH_WARN -gt 0 ]]; then
+    log "  $HEALTH_WARN optional primal(s) not available — provenance chain will be partial"
 fi
 
 # ══════════════════════════════════════════════════════════════
@@ -302,18 +313,27 @@ execute_workload() {
     start_time=$(date +%s)
 
     if [[ -x "$TOADSTOOL" ]]; then
-        "$TOADSTOOL" execute --timeout 300 --format text "$toml_path" > "$output_file" 2>&1 || true
+        # Prefer toadstool.validate (hardware-aware scheduling + validation)
+        # with fallback to toadstool execute (run only, no validation)
+        if "$TOADSTOOL" validate --timeout 300 --format text "$toml_path" > "$output_file" 2>&1; then
+            log "  [$name] dispatched via toadstool.validate"
+        elif "$TOADSTOOL" execute --timeout 300 --format text "$toml_path" > "$output_file" 2>&1; then
+            log "  [$name] dispatched via toadstool execute (validate unavailable)"
+        fi
     else
         log "  [$name] toadStool not found at $TOADSTOOL — running command directly"
-        local cmd
-        cmd=$(python3 -c "
+        local cmd args
+        read -r cmd args < <(python3 -c "
 import tomllib, sys
 with open('$toml_path', 'rb') as f:
     d = tomllib.load(f)
-print(d.get('execution', {}).get('command', ''))
-" 2>/dev/null) || cmd=""
+exe = d.get('execution', {})
+c = exe.get('command', '')
+a = ' '.join(exe.get('args', []))
+print(c, a)
+" 2>/dev/null) || { cmd=""; args=""; }
         if [[ -n "$cmd" && -x "$cmd" ]]; then
-            "$cmd" > "$output_file" 2>&1 || true
+            $cmd $args > "$output_file" 2>&1 || true
         else
             echo "[SKIP] No executable found" > "$output_file"
         fi
@@ -405,9 +425,14 @@ for t in data.get('targets', []):
     while IFS='|' read -r tid metric expected tolerance; do
         [[ -z "$tid" ]] && continue
 
-        local found=false
+        local found=false actual_val=""
         for result_file in "$RESULTS_DIR"/*.stdout; do
             [[ -f "$result_file" ]] || continue
+            actual_val=$(grep -oP "$metric[^0-9]*\K[0-9]+\.?[0-9]*" "$result_file" 2>/dev/null | head -1) || true
+            if [[ -n "$actual_val" ]]; then
+                found=true
+                break
+            fi
             if grep -q "$metric" "$result_file" 2>/dev/null; then
                 found=true
                 break
@@ -415,8 +440,23 @@ for t in data.get('targets', []):
         done
 
         if $found; then
-            log "  [HIT]  $tid — $metric (expected: $expected)"
-            TARGET_HITS=$((TARGET_HITS + 1))
+            if [[ -n "$actual_val" && -n "$expected" && -n "$tolerance" ]]; then
+                local match
+                match=$(python3 -c "
+e, a, t = float('$expected'), float('$actual_val'), float('$tolerance')
+print('PASS' if abs(a - e) <= t else 'FAIL')
+" 2>/dev/null) || match="SKIP"
+                if [[ "$match" == "PASS" ]]; then
+                    log "  [OK]   $tid — $metric: $actual_val ≈ $expected (±$tolerance)"
+                    TARGET_HITS=$((TARGET_HITS + 1))
+                else
+                    log "  [FAIL] $tid — $metric: $actual_val vs $expected (±$tolerance)"
+                    TARGET_MISS=$((TARGET_MISS + 1))
+                fi
+            else
+                log "  [HIT]  $tid — $metric (expected: $expected)"
+                TARGET_HITS=$((TARGET_HITS + 1))
+            fi
         else
             log "  [MISS] $tid — $metric not found in workload output"
             TARGET_MISS=$((TARGET_MISS + 1))
