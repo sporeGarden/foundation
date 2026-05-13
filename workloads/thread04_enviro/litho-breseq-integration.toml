@@ -1,0 +1,80 @@
+# Thread 4 + lithoSpore Module 6: LTEE Tenaillon Integration
+#
+# Runs lithoSpore's ltee-breseq binary and validates its output against
+# Thread 4/5 targets. Establishes provenance chain from wetSpring → lithoSpore
+# Module 6 → Foundation Thread 4 anchoring.
+#
+# Tenaillon 2016 (B7): 264-genome mutation accumulation study, linking
+# Thread 4 (environmental genomics) and Thread 5 (LTEE evolution).
+
+[metadata]
+name = "litho-breseq-integration"
+description = "Run lithoSpore breseq module and anchor to Thread 4/5"
+version = "0.1.0"
+thread = "04"
+thread_name = "Environmental Genomics & Field Science"
+litho_module = 6
+spring_upstream = "wetSpring"
+
+[execution]
+type = "native"
+command = "/usr/bin/bash"
+args = ["-c", """
+set -euo pipefail
+LITHO="${LITHOSPORE_ROOT:-$(cd "$(dirname "$0")/../../../lithoSpore" 2>/dev/null && pwd)}"
+BRESEQ="$LITHO/target/release/ltee-breseq"
+EXPECTED="$LITHO/validation/expected/module6_breseq.json"
+
+echo "=== lithoSpore Module 6 → Foundation Thread 4 ==="
+
+if [ ! -x "$BRESEQ" ]; then
+    echo "[SKIP] ltee-breseq binary not found at $BRESEQ"
+    echo "  Build: cd $LITHO && cargo build --release"
+    exit 0
+fi
+
+if [ ! -f "$EXPECTED" ]; then
+    echo "[SKIP] Expected values not found: $EXPECTED"
+    exit 0
+fi
+
+echo "Running: $BRESEQ --expected $EXPECTED --json"
+RESULT=$("$BRESEQ" --expected "$EXPECTED" --json 2>/dev/null)
+
+STATUS=$(echo "$RESULT" | python3 -c "import sys,json; r=json.load(sys.stdin); print(r['status'])")
+CHECKS=$(echo "$RESULT" | python3 -c "import sys,json; r=json.load(sys.stdin); print(f\"{r['checks_passed']}/{r['checks']}\")")
+
+echo "  Module 6 status: $STATUS ($CHECKS checks)"
+
+if [ "$STATUS" = "Pass" ]; then
+    echo "[OK] lithoSpore Module 6 → Thread 4/5 integration PASS"
+    echo ""
+    echo "Provenance chain:"
+    echo "  wetSpring B7 Tenaillon 2016 → lithoSpore artifact"
+    echo "  lithoSpore ltee-breseq 8/8 → Foundation Thread 4 anchor"
+    if command -v b3sum >/dev/null 2>&1; then
+        echo "  BLAKE3(expected): $(b3sum --no-names "$EXPECTED" | cut -c1-16)…"
+    fi
+    exit 0
+else
+    echo "[FAIL] lithoSpore Module 6 did not PASS — cannot anchor to Thread 4"
+    echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    exit 1
+fi
+"""]
+working_dir = "${FOUNDATION_ROOT}"
+
+[resources]
+max_memory_bytes = 268435456
+max_cpu_percent = 25.0
+
+[provenance]
+chain = "rhizoCrypt"
+attestation = "sweetGrass"
+spine = "loamSpine"
+requires_trio = true
+upstream_module = "lithoSpore/ltee-breseq"
+upstream_spring = "wetSpring"
+
+[security]
+isolation_level = "None"

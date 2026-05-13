@@ -1,0 +1,80 @@
+# Thread 7 + lithoSpore Module 7: LTEE Anderson Integration
+#
+# Runs lithoSpore's ltee-anderson binary and validates its output against
+# Thread 7 targets. Establishes provenance chain from hotSpring → lithoSpore
+# Module 7 → Foundation Thread 7.
+#
+# This workload proves the full data pipeline from spring reproduction
+# through lithoSpore GuideStone module to Foundation knowledge anchoring.
+
+[metadata]
+name = "litho-anderson-integration"
+description = "Run lithoSpore anderson module and anchor results to Thread 7"
+version = "0.1.0"
+thread = "07"
+thread_name = "Anderson Mathematics"
+litho_module = 7
+spring_upstream = "hotSpring"
+
+[execution]
+type = "native"
+command = "/usr/bin/bash"
+args = ["-c", """
+set -euo pipefail
+LITHO="${LITHOSPORE_ROOT:-$(cd "$(dirname "$0")/../../../lithoSpore" 2>/dev/null && pwd)}"
+ANDERSON="$LITHO/target/release/ltee-anderson"
+EXPECTED="$LITHO/validation/expected/module7_anderson.json"
+
+echo "=== lithoSpore Module 7 → Foundation Thread 7 ==="
+
+if [ ! -x "$ANDERSON" ]; then
+    echo "[SKIP] ltee-anderson binary not found at $ANDERSON"
+    echo "  Build: cd $LITHO && cargo build --release"
+    exit 0
+fi
+
+if [ ! -f "$EXPECTED" ]; then
+    echo "[SKIP] Expected values not found: $EXPECTED"
+    exit 0
+fi
+
+echo "Running: $ANDERSON --expected $EXPECTED --json"
+RESULT=$("$ANDERSON" --expected "$EXPECTED" --json 2>/dev/null)
+
+STATUS=$(echo "$RESULT" | python3 -c "import sys,json; r=json.load(sys.stdin); print(r['status'])")
+CHECKS=$(echo "$RESULT" | python3 -c "import sys,json; r=json.load(sys.stdin); print(f\"{r['checks_passed']}/{r['checks']}\")")
+
+echo "  Module 7 status: $STATUS ($CHECKS checks)"
+
+if [ "$STATUS" = "Pass" ]; then
+    echo "[OK] lithoSpore Module 7 → Thread 7 integration PASS"
+    echo ""
+    echo "Provenance chain:"
+    echo "  hotSpring B2 Anderson expected → lithoSpore artifact"
+    echo "  lithoSpore ltee-anderson 5/5 → Foundation Thread 7 anchor"
+    if command -v b3sum >/dev/null 2>&1; then
+        echo "  BLAKE3(expected): $(b3sum --no-names "$EXPECTED" | cut -c1-16)…"
+    fi
+    exit 0
+else
+    echo "[FAIL] lithoSpore Module 7 did not PASS — cannot anchor to Thread 7"
+    echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    exit 1
+fi
+"""]
+working_dir = "${FOUNDATION_ROOT}"
+
+[resources]
+max_memory_bytes = 268435456
+max_cpu_percent = 25.0
+
+[provenance]
+chain = "rhizoCrypt"
+attestation = "sweetGrass"
+spine = "loamSpine"
+requires_trio = true
+upstream_module = "lithoSpore/ltee-anderson"
+upstream_spring = "hotSpring"
+
+[security]
+isolation_level = "None"
