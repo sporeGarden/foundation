@@ -26,10 +26,12 @@ for the domain they care about.
 | `IMMUNO_DRUG_DISCOVERY.md` | Thread 3: Immunology / Drug Discovery | Active |
 | `ENVIRONMENTAL_GENOMICS.md` | Thread 4: Environmental Genomics & Field Science | Active |
 | `LTEE_EVOLUTIONARY_DYNAMICS.md` | Thread 5: Evolutionary Biology / LTEE | Active |
+| `ML_SURROGATES.md` | Thread 5: LTEE ML Surrogates | Active |
 | `MEASUREMENT_SCIENCE.md` | Thread 6: Agricultural Science + Thread 7: Anderson Mathematics | Active |
 | `SOVEREIGN_HEALTH.md` | Thread 8: Human Health / Clinical | Active |
 | `GAMING_CREATIVE_SCIENCE.md` | Thread 9: Gaming / Creative | Active |
 | `PROVENANCE_ECONOMICS.md` | Thread 10: Provenance / Economics | Active |
+| `LTEE_EVOLUTION.md` | Thread 5: LTEE (initial seed) | Superseded by `LTEE_EVOLUTIONARY_DYNAMICS.md` |
 
 ## How to Author a New Expression
 

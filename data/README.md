@@ -7,14 +7,27 @@ Data source manifests and validation targets for the unified lineage.
 ```
 data/
   sources/
-    thread01_wcm.toml         Whole-Cell Modeling (27 sources, 7 ABG papers)
-    thread02_plasma.toml       Plasma Physics & Lattice QCD (18 sources)
-    thread03_immuno.toml       Immunology & Drug Discovery (18 sources)
-    thread04_enviro.toml       Environmental Genomics & Field Science (23 sources)
-    thread08_health.toml       Human Health & Clinical Translation (14 sources)
+    thread01_wcm.toml              Whole-Cell Modeling (27 sources, 7 ABG papers)
+    thread02_plasma.toml            Plasma Physics & Lattice QCD (18 sources)
+    thread03_immuno.toml            Immunology & Drug Discovery (18 sources)
+    thread04_enviro.toml            Environmental Genomics & Field Science (23 sources)
+    thread05_ltee.toml              Evolutionary Biology / LTEE (12 sources)
+    thread05_ml_surrogates.toml     ML surrogates for LTEE (neuralSpring)
+    thread06_ag.toml                Agricultural Science
+    thread07_anderson.toml          Anderson Mathematics
+    thread08_health.toml            Human Health & Clinical Translation (14 sources)
+    thread09_gaming.toml            Gaming / Creative (ludoSpring)
+    thread10_provenance.toml        Provenance / Economics
   targets/
-    thread01_wcm_targets.toml  Whole-Cell Modeling (24 targets across Papers A-G)
-    thread03_immuno_targets.toml  Immunology & Drug Discovery (12 targets)
+    thread01_wcm_targets.toml       Whole-Cell Modeling (24 targets across Papers A-G)
+    thread03_immuno_targets.toml    Immunology & Drug Discovery (12 targets)
+    thread05_ltee_targets.toml      LTEE evolutionary dynamics (10 targets)
+    thread05_ml_targets.toml        ML surrogate targets
+    thread06_ag_targets.toml        Agricultural science targets
+    thread07_anderson_targets.toml  Anderson mathematics targets
+    thread08_health_targets.toml    Human health targets
+    thread09_gaming_targets.toml    Gaming / creative targets (13 targets)
+    thread10_provenance_targets.toml  Provenance / economics targets
 ```
 
 ## Public Data Repository Anchors

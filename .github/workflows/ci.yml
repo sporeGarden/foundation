@@ -40,19 +40,27 @@ jobs:
           python3 -c "
           import tomllib, pathlib, sys
           idx = tomllib.loads(pathlib.Path('lineage/THREAD_INDEX.toml').read_text())
-          threads = idx.get('thread', [])
+          threads = idx.get('threads', [])
           missing = []
           for t in threads:
               tid = t.get('id', '')
-              src = t.get('source_manifest', '')
-              tgt = t.get('target_manifest', '')
+              src = t.get('data_sources', '')
+              tgt = t.get('data_targets', '')
               if src and not pathlib.Path(src).exists():
                   missing.append(f'Thread {tid}: missing source {src}')
               if tgt and not pathlib.Path(tgt).exists():
                   missing.append(f'Thread {tid}: missing target {tgt}')
+              ml_src = t.get('ml_data_sources', '')
+              ml_tgt = t.get('ml_data_targets', '')
+              if ml_src and not pathlib.Path(ml_src).exists():
+                  missing.append(f'Thread {tid}: missing ML source {ml_src}')
+              if ml_tgt and not pathlib.Path(ml_tgt).exists():
+                  missing.append(f'Thread {tid}: missing ML target {ml_tgt}')
           for m in missing:
               print(f'WARN: {m}')
-          print(f'{len(threads)} threads indexed, {len(missing)} manifest(s) missing')
+          if missing:
+              sys.exit(1)
+          print(f'{len(threads)} threads indexed, all manifests present')
           "
 
       - name: Data manifest hash coverage

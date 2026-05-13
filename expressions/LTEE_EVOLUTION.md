@@ -1,9 +1,15 @@
 <!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
-# Thread 5: Evolutionary Biology / LTEE — Foundation Expression
+
+> **Superseded**: This document was the initial Thread 5 seed (May 11, 2026).
+> The canonical Thread 5 expression is now **`LTEE_EVOLUTIONARY_DYNAMICS.md`**
+> (May 12, 2026), which has more current spring status and lithoSpore module
+> mappings. This file is retained as fossil record.
+
+# Thread 5: Evolutionary Biology / LTEE — Foundation Expression (Superseded)
 
 **Date:** May 11, 2026
 **Thread:** 5 — Evolutionary Biology / LTEE
-**Status:** Seeded (data sources + validation targets populated)
+**Status:** Superseded by `LTEE_EVOLUTIONARY_DYNAMICS.md`
 **Springs:** wetSpring, neuralSpring, healthSpring, groundSpring, hotSpring, airSpring
 **Contacts:** Dolson, Waters
 

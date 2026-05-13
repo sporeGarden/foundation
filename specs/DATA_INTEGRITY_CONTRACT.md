@@ -54,7 +54,7 @@ When retrieving external data:
 1. Record the source URL, database version, and access timestamp
 2. Compute BLAKE3 hash of the retrieved content
 3. Store the hash in the appropriate `data/sources/*.toml` manifest
-4. Store the artifact via NestGate (`store.put` with BLAKE3 key)
+4. Store the artifact via NestGate (`storage.store` with BLAKE3 key)
 5. Open a rhizoCrypt DAG session recording the retrieval
 
 If the same source is retrieved again and the hash differs, the new

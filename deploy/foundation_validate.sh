@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # foundation_validate.sh — Full foundation validation with provenance
 #
 # Orchestrates the complete foundation validation cycle:
@@ -164,7 +165,7 @@ rpc_health() {
     local resp
 
     if [[ "$name" == "Songbird" ]]; then
-        resp=$(curl -sf --max-time 3 "http://127.0.0.1:$port/health" 2>/dev/null) || resp=""
+        resp=$(curl -sf --max-time 3 "http://${PRIMAL_HOST}:$port/health" 2>/dev/null) || resp=""
         if [[ "$resp" == "OK" ]]; then
             log "  [OK] $name (HTTP $port)"
             return 0
@@ -182,7 +183,7 @@ rpc_health() {
         return 1
     fi
 
-    resp=$(curl -sf --max-time 3 "http://127.0.0.1:$port" \
+    resp=$(curl -sf --max-time 3 "http://${PRIMAL_HOST}:$port" \
         -X POST -H 'Content-Type: application/json' \
         -d '{"jsonrpc":"2.0","method":"health.liveness","params":{},"id":0}' 2>/dev/null) || resp=""
     if [[ -n "$resp" ]] && echo "$resp" | grep -q '"result"'; then
@@ -190,7 +191,7 @@ rpc_health() {
         return 0
     fi
 
-    resp=$(printf '{"jsonrpc":"2.0","method":"health.liveness","params":{},"id":0}\n' | nc -w 3 127.0.0.1 "$port" 2>/dev/null) || resp=""
+    resp=$(printf '{"jsonrpc":"2.0","method":"health.liveness","params":{},"id":0}\n' | nc -w 3 "$PRIMAL_HOST" "$port" 2>/dev/null) || resp=""
     if [[ -n "$resp" ]] && echo "$resp" | grep -q '"result"'; then
         log "  [OK] $name (TCP $port)"
         return 0

@@ -5,3 +5,18 @@
 # Validation run results (committed selectively, not bulk)
 # Individual runs may be committed after review.
 # validation/run-*/
+
+# Editor and OS debris
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+.env
+.venv/
+.idea/
+.vscode/

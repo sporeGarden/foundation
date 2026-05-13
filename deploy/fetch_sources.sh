@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # fetch_sources.sh — Retrieve public data sources and anchor them with BLAKE3
 #
 # Reads data/sources/*.toml manifests, fetches datasets from NCBI, UniProt,
