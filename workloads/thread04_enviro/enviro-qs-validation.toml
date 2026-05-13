@@ -16,7 +16,7 @@ thread_name = "Environmental Genomics & Field Science"
 
 [execution]
 type = "native"
-command = "/usr/bin/bash"
+command = "/usr/bin/env bash"
 args = ["-c", """
 set -euo pipefail
 ROOT="${FOUNDATION_ROOT:-$(cd "$(dirname "$0")/../../.." && pwd)}"

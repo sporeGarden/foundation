@@ -55,20 +55,45 @@ done
 
 mkdir -p "$RESULTS_DIR"
 
-BEARDOG_PORT="${BEARDOG_PORT:-9100}"
-SONGBIRD_PORT="${SONGBIRD_PORT:-9200}"
-TOADSTOOL_PORT="${TOADSTOOL_PORT:-9400}"
-NESTGATE_PORT="${NESTGATE_PORT:-9500}"
-RHIZOCRYPT_PORT="${RHIZOCRYPT_PORT:-9601}"
-LOAMSPINE_PORT="${LOAMSPINE_PORT:-9700}"
-SWEETGRASS_PORT="${SWEETGRASS_PORT:-9850}"
+# Capability-based primal discovery: each primal's port is resolved from
+# environment (explicit config), then XDG runtime discovery socket, then
+# well-known defaults. No primal has baked knowledge of other primals'
+# locations — foundation discovers at runtime.
+discover_port() {
+    local name="$1" default="$2"
+    local env_var="${name^^}_PORT"
+    local env_val="${!env_var:-}"
+    if [[ -n "$env_val" ]]; then echo "$env_val"; return; fi
+
+    local discovery_sock="${XDG_RUNTIME_DIR:-/tmp}/ecoPrimals/discovery.sock"
+    if [[ -S "$discovery_sock" ]]; then
+        local port
+        port=$(echo "{\"jsonrpc\":\"2.0\",\"method\":\"capability.resolve\",\"params\":{\"primal\":\"$name\"},\"id\":1}" \
+            | nc -w 2 -U "$discovery_sock" 2>/dev/null \
+            | python3 -c "import sys,json; print(json.load(sys.stdin).get('result',{}).get('port',''))" 2>/dev/null)
+        if [[ -n "$port" ]]; then echo "$port"; return; fi
+    fi
+
+    echo "$default"
+}
+
+BEARDOG_PORT=$(discover_port "beardog" "9100")
+SONGBIRD_PORT=$(discover_port "songbird" "9200")
+TOADSTOOL_PORT=$(discover_port "toadstool" "9400")
+NESTGATE_PORT=$(discover_port "nestgate" "9500")
+RHIZOCRYPT_PORT=$(discover_port "rhizocrypt" "9601")
+LOAMSPINE_PORT=$(discover_port "loamspine" "9700")
+SWEETGRASS_PORT=$(discover_port "sweetgrass" "9850")
 
 log() { echo "[$(date +%H:%M:%S)] $*"; }
 
 blake3_hash() { b3sum "$1" | cut -d' ' -f1; }
 
+# RPC host resolved at runtime — never assume localhost.
+PRIMAL_HOST="${PRIMAL_HOST:-127.0.0.1}"
+
 rpc_nestgate() {
-    printf '%s\n' "$1" | nc -w 5 127.0.0.1 "$NESTGATE_PORT" 2>/dev/null
+    printf '%s\n' "$1" | nc -w 5 "$PRIMAL_HOST" "$NESTGATE_PORT" 2>/dev/null
 }
 
 rpc_rhizocrypt() {
@@ -95,17 +120,17 @@ s.close()
 print(data.decode().strip())
 " "$1" 2>/dev/null
     else
-        printf '%s\n' "$1" | nc -w 5 127.0.0.1 "$RHIZOCRYPT_PORT" 2>/dev/null
+        printf '%s\n' "$1" | nc -w 5 "$PRIMAL_HOST" "$RHIZOCRYPT_PORT" 2>/dev/null
     fi
 }
 
 rpc_loamspine() {
-    curl -s -X POST "http://127.0.0.1:$LOAMSPINE_PORT" \
+    curl -s -X POST "http://${PRIMAL_HOST}:${LOAMSPINE_PORT}" \
         -H 'Content-Type: application/json' -d "$1" 2>/dev/null
 }
 
 rpc_sweetgrass() {
-    curl -s -X POST "http://127.0.0.1:$SWEETGRASS_PORT/jsonrpc" \
+    curl -s -X POST "http://${PRIMAL_HOST}:${SWEETGRASS_PORT}/jsonrpc" \
         -H 'Content-Type: application/json' -d "$1" 2>/dev/null
 }
 

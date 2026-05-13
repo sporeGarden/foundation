@@ -14,9 +14,9 @@ spring = "hotSpring"
 
 [execution]
 type = "native"
-command = "${SPRINGS_ROOT:-$HOME/Development/ecoPrimals/springs}/hotSpring/barracuda/target/release/validate_chuna"
+command = "${SPRINGS_ROOT:-${ECOPRIMALS_ROOT:-$(cd "$(dirname "$0")/../../.." 2>/dev/null && pwd)}/springs}/hotSpring/barracuda/target/release/validate_chuna"
 args = []
-working_dir = "${SPRINGS_ROOT:-$HOME/Development/ecoPrimals/springs}/hotSpring"
+working_dir = "${SPRINGS_ROOT:-${ECOPRIMALS_ROOT:-$(cd "$(dirname "$0")/../../.." 2>/dev/null && pwd)}/springs}/hotSpring"
 
 [resources]
 max_memory_bytes = 4294967296
@@ -24,3 +24,9 @@ max_cpu_percent = 90.0
 
 [security]
 isolation_level = "None"
+
+[provenance]
+chain = "rhizoCrypt"
+attestation = "sweetGrass"
+spine = "loamSpine"
+requires_trio = true

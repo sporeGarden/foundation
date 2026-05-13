@@ -16,7 +16,7 @@ thread_name = "Whole-Cell Modeling"
 
 [execution]
 type = "native"
-command = "/usr/bin/bash"
+command = "/usr/bin/env bash"
 args = ["-c", """
 DATA_DIR="${FOUNDATION_ROOT:-.}/.data"
 
@@ -48,3 +48,9 @@ max_cpu_percent = 20.0
 
 [security]
 isolation_level = "None"
+
+[provenance]
+chain = "rhizoCrypt"
+attestation = "sweetGrass"
+spine = "loamSpine"
+requires_trio = true

@@ -18,7 +18,7 @@ spring_upstream = "wetSpring"
 
 [execution]
 type = "native"
-command = "/usr/bin/bash"
+command = "/usr/bin/env bash"
 args = ["-c", """
 set -euo pipefail
 LITHO="${LITHOSPORE_ROOT:-$(cd "$(dirname "$0")/../../../lithoSpore" 2>/dev/null && pwd)}"
