@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # Thread 2: hotSpring — Sarkas Yukawa MD Validation
 #
 # Validates 12 Sarkas-derived targets: energy drift, RDF structure,

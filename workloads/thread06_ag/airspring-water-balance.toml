@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 [metadata]
 name = "airspring-water-balance"
 description = "FAO-56 Chapter 8 daily soil water balance + dual Kc + Stewart yield response"

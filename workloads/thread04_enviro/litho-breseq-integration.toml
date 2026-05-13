@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # Thread 4 + lithoSpore Module 6: LTEE Tenaillon Integration
 #
 # Runs lithoSpore's ltee-breseq binary and validates its output against

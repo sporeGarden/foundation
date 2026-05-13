@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # Thread 6+7: groundSpring — Full Validation Suite
 #
 # Runs validate_all meta-runner which executes all 29 Python-parity validators

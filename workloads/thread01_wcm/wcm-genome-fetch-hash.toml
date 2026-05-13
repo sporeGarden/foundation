@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # Thread 1: Whole-Cell Modeling — Genome Fetch + BLAKE3 Anchor
 #
 # Fetches M. genitalium (NC_000908.2), JCVI-syn3A (CP016816.2), and

@@ -16,8 +16,8 @@ jobs:
       - name: Shellcheck deploy scripts
         run: |
           sudo apt-get install -y shellcheck
-          shellcheck deploy/fetch_sources.sh || true
-          shellcheck deploy/foundation_validate.sh || true
+          shellcheck deploy/fetch_sources.sh
+          shellcheck deploy/foundation_validate.sh
 
       - name: TOML syntax check
         run: |

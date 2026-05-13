@@ -98,7 +98,7 @@ required = true
 depends_on = ["beardog"]
 health_method = "health.liveness"
 by_capability = "storage"
-capabilities = ["store.put", "store.get", "store.hash"]
+capabilities = ["storage.store", "storage.retrieve", "storage.hash"]
 
 [[graph.node]]
 name = "rhizocrypt"
@@ -108,7 +108,7 @@ required = true
 depends_on = ["beardog"]
 health_method = "health.liveness"
 by_capability = "dag"
-capabilities = ["dag.session_start", "dag.append", "dag.session_end"]
+capabilities = ["dag.session.create", "dag.event.append", "dag.session.complete"]
 
 [[graph.node]]
 name = "loamspine"
@@ -118,7 +118,7 @@ required = true
 depends_on = ["beardog"]
 health_method = "health.liveness"
 by_capability = "ledger"
-capabilities = ["ledger.commit", "ledger.query"]
+capabilities = ["spine.create", "entry.append"]
 
 [[graph.node]]
 name = "sweetgrass"

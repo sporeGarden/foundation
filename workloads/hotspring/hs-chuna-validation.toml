@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # Thread 2: hotSpring — Chuna Papers 43-45 Validation
 #
 # Validates gradient flow (Bazavov & Chuna 2021), BGK dielectric

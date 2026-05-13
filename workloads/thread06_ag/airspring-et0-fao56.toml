@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 [metadata]
 name = "airspring-et0-fao56"
 description = "FAO-56 Penman-Monteith reference evapotranspiration — 75/75 cross-validated checks"

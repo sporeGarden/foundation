@@ -46,7 +46,7 @@ log() { echo "[$(date +%H:%M:%S)] $*"; }
 blake3_hash() { b3sum "$1" | cut -d' ' -f1; }
 
 rpc_nestgate() {
-    printf '%s\n' "$1" | nc -w 5 127.0.0.1 "$NESTGATE_PORT" 2>/dev/null
+    printf '%s\n' "$1" | nc -w 5 "${PRIMAL_HOST:-127.0.0.1}" "$NESTGATE_PORT" 2>/dev/null
 }
 
 NCBI_BASE="https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
@@ -392,65 +392,6 @@ fetch_thread10_provenance() {
     log "  [INFO] Thread 10 sources are internal test vectors (rhizoCrypt, loamSpine, sweetGrass)."
     log "  [INFO] No external public data to fetch. Validation via NUCLEUS composition."
     SKIP_COUNT=$((SKIP_COUNT + 1))
-}
-
-# ==========================================================================
-# TOML manifest-driven fetch (generic)
-# ==========================================================================
-
-fetch_from_manifest() {
-    local manifest="$1"
-    local thread_name="$2"
-
-    if [[ ! -f "$manifest" ]]; then
-        log "  [WARN] Manifest not found: $manifest"
-        return 0
-    fi
-
-    log ""
-    log "── Manifest-driven fetch: $thread_name ──"
-
-    local ncbi_accessions
-    ncbi_accessions=$(python3 -c "
-try:
-    import tomllib
-except ImportError:
-    import tomli as tomllib
-import sys
-with open('$manifest', 'rb') as f:
-    data = tomllib.load(f)
-for s in data.get('sources', []):
-    db = s.get('database', '')
-    for acc in s.get('accessions', []):
-        if not acc:
-            continue
-        if 'NCBI' in db or db == 'NCBI SRA':
-            if acc.startswith('PRJNA'):
-                print(f'bioproject:{acc}')
-            elif acc.startswith(('NC_', 'NM_', 'NR_')):
-                print(f'nucleotide:{acc}')
-            elif acc.startswith(('GCA_', 'GCF_')):
-                print(f'assembly:{acc}')
-        elif 'UniProt' in db:
-            if acc.startswith('UP'):
-                print(f'uniprot:{acc}')
-" 2>/dev/null) || true
-
-    if [[ -z "$ncbi_accessions" ]]; then
-        log "  [INFO] No fetchable NCBI/UniProt accessions in manifest"
-        return 0
-    fi
-
-    while IFS= read -r entry; do
-        local type="${entry%%:*}"
-        local acc="${entry#*:}"
-        case "$type" in
-            bioproject)  fetch_ncbi_bioproject "$acc" ;;
-            nucleotide)  fetch_ncbi_nucleotide "$acc" ;;
-            assembly)    fetch_ncbi_assembly "$acc" ;;
-            uniprot)     fetch_uniprot_proteome "$acc" ;;
-        esac
-    done <<< "$ncbi_accessions"
 }
 
 # ==========================================================================

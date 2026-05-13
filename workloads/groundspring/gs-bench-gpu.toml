@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # Thread 6+7: groundSpring — GPU Benchmark (three-mode)
 #
 # Runs the bench_gpu_vs_kokkos binary comparing:

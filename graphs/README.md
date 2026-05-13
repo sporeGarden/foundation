@@ -23,11 +23,11 @@ For primal graphs, see:
 
 ```bash
 # Deploy via projectNUCLEUS infrastructure
-cd ../../sporeGarden/projectNUCLEUS/deploy
+cd ../../projectNUCLEUS/deploy
 bash deploy.sh --composition nest --gate irongate
 
 # Execute foundation validation through toadStool
-toadstool execute ../../sporeGarden/foundation/graphs/foundation_validation.toml
+toadstool execute graphs/foundation_validation.toml
 ```
 
 As thread expressions mature, thread-specific validation graphs may be

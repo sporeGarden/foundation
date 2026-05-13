@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 [metadata]
 name = "airspring-atlas-pipeline"
 description = "Michigan Crop Water Atlas — 100 stations, 80 years, full ET₀ + yield pipeline"

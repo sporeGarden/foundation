@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 [metadata]
 name = "airspring-et0-methods"
 description = "8 ET₀ methods: PM, PT, Thornthwaite, Hargreaves, Makkink, Turc, Hamon, Blaney-Criddle"

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 [metadata]
 name = "airspring-soil-physics"
 description = "Richards equation (VG-Mualem) + Green-Ampt infiltration + SCS curve number + pedotransfer"

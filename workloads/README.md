@@ -50,7 +50,18 @@ isolation_level = "None"
 | `wcm-proteome-validation` | UniProt proteome sizes match published gene counts |
 | `wcm-kegg-pathway-check` | KEGG metabolic pathway data for WCM organisms |
 
-### Threads 6+7: groundSpring (Agricultural + Anderson)
+### Thread 6: Agricultural Science
+
+| Workload | Validates |
+|----------|-----------|
+| `as-defoliation-survival` | Defoliation survival targets (airSpring) |
+| `as-fhb-resistance` | FHB resistance targets (airSpring) |
+| `as-fls2-immunity` | FLS2 plant immunity targets (airSpring) |
+| `as-mycorrhizal-biomass` | Mycorrhizal biomass targets (airSpring) |
+| `as-nematode-biocontrol` | Nematode biocontrol targets (airSpring) |
+| `as-soil-microbiome` | Soil microbiome diversity targets (airSpring) |
+
+### groundSpring (cross-cutting)
 
 | Workload | Validates |
 |----------|-----------|
@@ -65,6 +76,13 @@ isolation_level = "None"
 |----------|-----------|
 | `enviro-qs-validation` | QS framework targets (7 checks) from wetSpring + airSpring |
 | `litho-breseq-integration` | lithoSpore Module 6 → Thread 4 anchoring (8/8 PASS) |
+
+### Thread 2: Plasma Physics (hotSpring)
+
+| Workload | Validates |
+|----------|-----------|
+| `hs-chuna-md-cpu` | Chuna MD CPU parity (hotSpring) |
+| `hs-sarkas-md-validation` | Sarkas MD validation (hotSpring) |
 
 ### Thread 7: Anderson Mathematics
 

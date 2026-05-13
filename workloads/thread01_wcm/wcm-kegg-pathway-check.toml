@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # Thread 1: Whole-Cell Modeling — KEGG Pathway Validation
 #
 # Verifies that KEGG pathway data was fetched for the WCM organisms
