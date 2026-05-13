@@ -7,7 +7,7 @@
 [meta]
 thread = 9
 thread_name = "Gaming / Creative"
-expression = ""
+expression = "expressions/GAMING_CREATIVE_SCIENCE.md"
 last_updated = "2026-05-11"
 total_sources = 14
 

@@ -7,7 +7,7 @@
 [meta]
 thread = 10
 thread_name = "Provenance / Economics"
-expression = ""
+expression = "expressions/PROVENANCE_ECONOMICS.md"
 last_updated = "2026-05-11"
 total_sources = 6
 
