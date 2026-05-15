@@ -1,6 +1,6 @@
 # Primal Deep Debt Audit — Upstream Handback
 
-**Date**: 2026-05-07
+**Date**: 2026-05-07 (geological record — re-audit primals for current state)
 **From**: projectNUCLEUS (ironGate)
 **For**: All primal teams, primalSpring
 **Scope**: Code quality audit across all 15 locally-cloned primal repos.

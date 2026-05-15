@@ -49,7 +49,7 @@ bash foundation_validate.sh --skip-fetch          # Skip fetch, use cached data
 ```
 
 **Phases**:
-1. Health-check all NUCLEUS primals (7 required)
+1. Health-check NUCLEUS primals (7 checked; 3 required — provenance trio)
 2. Create provenance session (rhizoCrypt DAG + loamSpine spine)
 3. Fetch data sources (delegates to `fetch_sources.sh`)
 4. Register artifacts in NestGate with BLAKE3 anchors

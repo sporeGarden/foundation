@@ -12,7 +12,8 @@ can focus on what matters to their audiences.
 ## What This Is
 
 foundation is the scientific knowledge layer of the ecoPrimals ecosystem.
-It maps the complete validated lineage — 28 baseCamp companion papers,
+It maps the complete validated lineage — 26 baseCamp companion papers
+(28 including companion hardware and coordination notes),
 8 springs with 13,100+ quantitative checks, 70+ reproduced papers, and
 16 faculty and community contacts — as one unified whole, organized into
 10 interconnected domain threads.

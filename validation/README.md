@@ -26,8 +26,8 @@ validation/
     VALIDATION_SUMMARY.md
 ```
 
-Example: `validation/wcm-20260510/` for a Thread 1 whole-cell modeling
-validation run on May 10, 2026.
+Example: `validation/wcm-20260509/` for a Thread 1 whole-cell modeling
+validation run on May 9, 2026.
 
 ## Current State
 
@@ -51,7 +51,7 @@ need to evolve:
 
 | Thread | Date | Spring | Targets | Status |
 |--------|------|--------|---------|--------|
-| 1 — Whole-Cell Modeling | 2026-05-09 | hotSpring, wetSpring, healthSpring | 0/24 validated | Attempted — see `wcm-20260509/` |
+| 1 — Whole-Cell Modeling | 2026-05-09 | hotSpring, wetSpring, healthSpring | 0/24 validated | Attempted — `fetch_sources.sh` post-download validation added (size + gzip checks). rhizoCrypt RPC + ToadStool sandbox upstream-blocked. See `wcm-20260509/` |
 | 2 — Plasma Physics | 2026-05-11 | hotSpring v0.6.32 | 12/12 PASS | Validated |
 | 6 — Agricultural Science | 2026-05-11 | airSpring v0.10.0 | 36/36 PASS | Validated |
 | 7 — Anderson Mathematics | 2026-05-11 | groundSpring V132 | 18/18 PASS | Validated |

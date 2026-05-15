@@ -18,10 +18,10 @@ jobs:
           sudo apt-get install -y shellcheck
           shellcheck deploy/fetch_sources.sh
           shellcheck deploy/foundation_validate.sh
+          shellcheck deploy/backfill_hashes.sh
 
       - name: TOML syntax check
         run: |
-          pip install tomli-w
           python3 -c "
           import tomllib, pathlib, sys
           errors = 0
@@ -66,11 +66,32 @@ jobs:
       - name: Data manifest hash coverage
         run: |
           python3 -c "
-          import tomllib, pathlib
+          import tomllib, pathlib, sys
+          total_hashed = 0
+          total_sources = 0
+          total_empty_fetchable = 0
           for f in sorted(pathlib.Path('data/sources').glob('*.toml')):
               data = tomllib.loads(f.read_text())
               sources = data.get('source', data.get('sources', []))
-              empty = sum(1 for s in sources if isinstance(s, dict) and not s.get('blake3', ''))
-              total = len(sources) if isinstance(sources, list) else 0
-              print(f'{f.name}: {total - empty}/{total} hashed')
+              if not isinstance(sources, list):
+                  continue
+              hashed = 0
+              empty = 0
+              for s in sources:
+                  if not isinstance(s, dict):
+                      continue
+                  total_sources += 1
+                  if s.get('blake3', ''):
+                      hashed += 1
+                      total_hashed += 1
+                  else:
+                      empty += 1
+              print(f'{f.name}: {hashed}/{hashed + empty} hashed')
+          pct = (total_hashed / total_sources * 100) if total_sources > 0 else 0
+          print(f'Overall: {total_hashed}/{total_sources} ({pct:.0f}%)')
+          # Fail if hash coverage drops below current baseline (informational until backfill)
+          # When sources are fetched and hashed, raise this threshold
+          if total_sources > 0 and pct < 0:
+              print('::error::Hash coverage below threshold')
+              sys.exit(1)
           "

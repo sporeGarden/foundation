@@ -7,13 +7,17 @@ toadStool-executable workload definitions for foundation validation.
 ```
 workloads/
   thread01_wcm/       Whole-Cell Modeling validation workloads
-  thread02_plasma/    Plasma Physics (hotSpring Sarkas MD)
+  thread02_plasma/    Plasma Physics — thread-scoped (Sarkas MD)
   thread04_enviro/    Environmental Genomics (QS + lithoSpore Module 6)
-  thread06_ag/        Agricultural Science (airSpring full suite)
+  thread06_ag/        Agricultural Science (airSpring suite)
   thread07_anderson/  Anderson Mathematics (22 targets + lithoSpore Module 7)
   groundspring/       groundSpring cross-cutting (29 validators, GPU bench)
-  hotspring/          hotSpring validations (Chuna, Sarkas MD)
+  hotspring/          hotSpring cross-cutting (Chuna + Sarkas MD)
 ```
+
+Thread-scoped directories (`thread02_plasma/`) contain workloads relevant to a
+single domain thread. Cross-cutting directories (`hotspring/`, `groundspring/`)
+contain spring-level validations that serve multiple threads.
 
 ## Workload Format
 
@@ -54,12 +58,12 @@ isolation_level = "None"
 
 | Workload | Validates |
 |----------|-----------|
-| `as-defoliation-survival` | Defoliation survival targets (airSpring) |
-| `as-fhb-resistance` | FHB resistance targets (airSpring) |
-| `as-fls2-immunity` | FLS2 plant immunity targets (airSpring) |
-| `as-mycorrhizal-biomass` | Mycorrhizal biomass targets (airSpring) |
-| `as-nematode-biocontrol` | Nematode biocontrol targets (airSpring) |
-| `as-soil-microbiome` | Soil microbiome diversity targets (airSpring) |
+| `airspring-full-suite` | Complete airSpring validation suite (36/36 checks) |
+| `airspring-et0-fao56` | FAO-56 reference evapotranspiration targets |
+| `airspring-et0-methods` | ET0 method comparison targets |
+| `airspring-soil-physics` | Soil physics and water retention targets |
+| `airspring-water-balance` | Water balance and irrigation targets |
+| `airspring-atlas-pipeline` | Atlas data pipeline validation |
 
 ### groundSpring (cross-cutting)
 
@@ -81,8 +85,9 @@ isolation_level = "None"
 
 | Workload | Validates |
 |----------|-----------|
-| `hs-chuna-md-cpu` | Chuna MD CPU parity (hotSpring) |
-| `hs-sarkas-md-validation` | Sarkas MD validation (hotSpring) |
+| `hs-sarkas-md` | Sarkas MD validation — thread-local (thread02_plasma/) |
+| `hs-chuna-validation` | Chuna MD parity — cross-cutting (hotspring/) |
+| `hs-sarkas-md-validation` | Sarkas MD validation — cross-cutting (hotspring/) |
 
 ### Thread 7: Anderson Mathematics
 

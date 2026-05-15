@@ -156,10 +156,25 @@ fetch_uniprot_proteome() {
     local url="https://rest.uniprot.org/uniprotkb/stream?compressed=true&format=fasta&query=(proteome:${accession})"
 
     if curl -sf --max-time 120 -o "$out_file" "$url"; then
-        local hash
-        hash=$(blake3_hash "$out_file")
         local size
         size=$(stat -c%s "$out_file" 2>/dev/null || stat -f%z "$out_file" 2>/dev/null)
+
+        if [[ "$size" -lt 100 ]]; then
+            log "  [FAIL]  uniprot:$accession — file too small (${size}B, likely empty/excluded proteome)"
+            rm -f "$out_file"
+            FAIL_COUNT=$((FAIL_COUNT + 1))
+            return 0
+        fi
+
+        if ! gzip -t "$out_file" 2>/dev/null; then
+            log "  [FAIL]  uniprot:$accession — gzip integrity check failed (truncated/corrupt)"
+            rm -f "$out_file"
+            FAIL_COUNT=$((FAIL_COUNT + 1))
+            return 0
+        fi
+
+        local hash
+        hash=$(blake3_hash "$out_file")
         log "  [OK]    uniprot:$accession → blake3:${hash:0:16}… (${size}B)"
 
         if $REGISTER; then

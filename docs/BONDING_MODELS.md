@@ -11,7 +11,7 @@ The ecoPrimals hardware is a heterogeneous basement cluster — 11 towers,
 256 GB RAM. Each gate runs the NUCLEUS atomic that matches its hardware.
 Bonding describes how these gates relate to each other and to the outside.
 
-See `infra/whitePaper/gen3/about/HARDWARE.md` for the full node inventory.
+See `ecoPrimals/infra/whitePaper/gen3/about/HARDWARE.md` for the full node inventory.
 
 ### Gate-to-Atomic Mapping
 
@@ -64,7 +64,7 @@ security pen testing baseline established.
 **sporePrint visibility**: 5 public notebooks rendered on [primals.eco/lab/notebooks](https://primals.eco/lab/notebooks/)
 with embedded matplotlib charts. Auto-refresh CI propagates metrics and content from all
 26 source repos. Spring science hubs at `/lab/springs/` with validation summaries per domain.
-See `specs/VALIDATION_RESULTS.md` for detailed evidence.
+See `validation/` for detailed evidence per thread.
 
 ### NucBox M6 — Isolated Two-Node Covalent Bond (Phase 2)
 

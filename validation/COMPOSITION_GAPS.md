@@ -1,6 +1,6 @@
 # Composition Gaps — wetSpring Through Node Atomic
 
-**Date**: 2026-05-04
+**Date**: 2026-05-04 (geological record — verify against current NUCLEUS before acting)
 **Source**: First live composition validation of wetSpring science through
 toadStool dispatch on ironGate Node Atomic.
 **Purpose**: Document gaps for other teams to evolve. Each gap is a handoff —
