@@ -143,17 +143,37 @@ impl PrimalClient {
 | workload execution delegates to toadStool or runs directly | Keep `Command::new()` fallback for non-toadStool environments |
 | Parallel with lithoSpore chassis evolution | Share `litho-core` tolerance/provenance types where possible |
 
+## Signal Adoption (Wave 18)
+
+When the Rust elevation lands, the `foundation` UniBin should adopt the
+Neural API signal dispatch model per `SIGNAL_ADOPTION_STANDARD.md`:
+
+| Current (bash 4-call) | Target (Rust signal) |
+|----------------------|---------------------|
+| `rpc_nestgate storage.store` + `rpc_rhizocrypt dag.event.append` + `rpc_loamspine entry.append` + `rpc_sweetgrass braid.create` | `ctx.dispatch("nest.store", data)` |
+| `rpc_rhizocrypt dag.session.complete` + `rpc_loamspine entry.append` (SessionCommit) + `rpc_sweetgrass braid.create` | `ctx.dispatch("nest.commit", session)` |
+
+This collapses the Phase 4 registration and Phase 7 provenance commit
+from 4+ sequential RPC calls to 1 signal dispatch each. biomeOS manages
+sequencing, error recovery, and partial failure rollback.
+
+The bash pipeline cannot adopt signals (no `CompositionContext`), but the
+current 4-call pattern with response validation is the correct interim.
+
 ## Recommendation
 
 **Elevate in phases:**
 
-1. **Phase A (immediate):** Fix the bash script (done in this session — Phase 2
-   params, Phase 6 schema alignment, trusted_directories). Ship fixes now.
+1. **Phase A (complete):** Bash script fixes — Phase 2 params, Phase 6
+   schema alignment, trusted_directories, modularization, skip counting,
+   provenance response validation. Shipped May 16, 2026.
 2. **Phase B (next sprint):** Extract `foundation-core` types + `foundation-ipc`
    clients. These are reusable across lithoSpore and other gardens.
+   Use `CompositionContext` from primalSpring for IPC.
 3. **Phase C (following sprint):** Replace `foundation_validate.sh` with
-   `foundation validate` UniBin command. Keep `fetch_sources.sh` as last
-   bash holdout until `foundation-fetch` matures.
+   `foundation validate` UniBin command. Adopt `ctx.dispatch("nest.store")`
+   and `ctx.dispatch("nest.commit")` for signal-based provenance.
+   Keep `fetch_sources.sh` as last bash holdout until `foundation-fetch` matures.
 4. **Phase D:** Replace `fetch_sources.sh` with `foundation fetch`.
    At this point the repo is pure Rust + TOML + Markdown.
 

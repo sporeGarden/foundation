@@ -522,6 +522,57 @@ REPORT
 
 log "  [OK] Report: $RESULTS_DIR/VALIDATION_REPORT.md"
 
+cat > "$RESULTS_DIR/provenance.toml" << PROVTOML
+[run]
+session = "$SESSION_NAME"
+thread = "$THREAD_FILTER"
+date = "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+gate = "irongate"
+composition = "nest"
+
+[results]
+total_ok = $TOTAL_OK
+total_fail = $TOTAL_FAIL
+total_skip = $TOTAL_SKIP
+events = $EVENT_IDX
+
+[provenance]
+dag_session_id = "$SESSION_ID"
+merkle_root = "$MERKLE_ROOT"
+spine_id = "$SPINE_ID"
+braid_urn = "$BRAID_URN"
+provenance_warnings = $PROVENANCE_WARN
+PROVTOML
+
+log "  [OK] Provenance: $RESULTS_DIR/provenance.toml"
+
+# Copy results into spring-oriented dated folders per PROVENANCE_FOLDER_CONVENTION
+VALIDATION_BASE="$FOUNDATION_ROOT/validation"
+RUN_DATE=$(date +%Y-%m-%d)
+for stdout_file in "$RESULTS_DIR"/*.stdout; do
+    [[ -f "$stdout_file" ]] || continue
+    local_name=$(basename "$stdout_file" .stdout)
+    for spring_dir in "$VALIDATION_BASE"/*/; do
+        spring_name=$(basename "$spring_dir")
+        case "$local_name" in
+            hs-*|hotspring*) [[ "$spring_name" == "hotSpring" ]] || continue ;;
+            gs-*|groundspring*) [[ "$spring_name" == "groundSpring" ]] || continue ;;
+            airspring*) [[ "$spring_name" == "airSpring" ]] || continue ;;
+            healthspring*) [[ "$spring_name" == "healthSpring" ]] || continue ;;
+            ludospring*) [[ "$spring_name" == "ludoSpring" ]] || continue ;;
+            primalspring*) [[ "$spring_name" == "primalSpring" ]] || continue ;;
+            litho-*) [[ "$spring_name" == "groundSpring" ]] || continue ;;
+            wcm-*) continue ;;
+            *) continue ;;
+        esac
+        local dated_dir="$spring_dir/$RUN_DATE"
+        mkdir -p "$dated_dir"
+        cp "$stdout_file" "$dated_dir/"
+        cp "$RESULTS_DIR/provenance.toml" "$dated_dir/" 2>/dev/null || true
+        cp "$RESULTS_DIR/braid.json" "$dated_dir/" 2>/dev/null || true
+    done
+done
+
 log ""
 log "═══════════════════════════════════════════════════════════"
 log "  Foundation Validation Complete"

@@ -53,14 +53,25 @@ actual TURN relay IPC.
 | Thread 1 WCM — 0/27 targets validated | Review `validation/wcm-20260509/`, flip where justified | CATHEDRAL |
 | Thread 5 ML — `accessions = []` | Document as `source_type = "internal"` (neuralSpring models) | neuralSpring team |
 
-### Validation State
+### Validation State (updated May 16, 2026 — post-primalSpring Wave 18 audit)
 
-| Thread | Last Run | Status |
-|--------|----------|--------|
-| 1 — Whole-Cell Modeling | 2026-05-09 | Attempted — fetch infra validated, RPC upstream-blocked |
-| 2 — Plasma Physics | 2026-05-11 | 12/12 PASS |
-| 6 — Agricultural Science | 2026-05-11 | 36/36 PASS |
-| 7 — Anderson Mathematics | 2026-05-11 | 18/18 PASS |
+| Thread | Expression | Targets | Last Run | Status |
+|--------|-----------|---------|----------|--------|
+| 1 — Whole-Cell Modeling | ABG_WHOLE_CELL_REBUILD.md | 27 | 2026-05-09 | **BLOCKED** — fetch infra validated, RPC upstream-blocked |
+| 2 — Plasma Physics | PLASMA_QCD_SOVEREIGN_GPU.md | 12 | 2026-05-11 | **12/12 PASS** |
+| 3 — Immunology | IMMUNO_DRUG_DISCOVERY.md | 15 | — | Pending — expression + targets ready, spring validation needed |
+| 4 — Env Genomics | ENVIRONMENTAL_GENOMICS.md | 13 | — | Pending — expression + targets ready, spring validation needed |
+| 5 — LTEE / Evolution | LTEE_EVOLUTIONARY_DYNAMICS.md | 18 | — | **ACTIVE** — 14/18 partial, 4 pending (wetSpring B7) |
+| 5 ML — Surrogates | ML_SURROGATES.md | 12 | — | Pending — neuralSpring sources needed |
+| 6 — Agricultural Science | MEASUREMENT_SCIENCE.md | 36 | 2026-05-11 | **36/36 PASS** |
+| 7 — Anderson Mathematics | MEASUREMENT_SCIENCE.md | 22 | 2026-05-11 | **18/18 PASS** |
+| 8 — Human Health | SOVEREIGN_HEALTH.md | 9 | — | Pending — healthSpring expanding |
+| 9 — Gaming / Creative | GAMING_CREATIVE_SCIENCE.md | 13 | — | **SEEDED** — ludoSpring growing |
+| 10 — Provenance | PROVENANCE_ECONOMICS.md | 8 | — | **SEEDED** — primalSpring co-owns |
+
+**Note**: The upstream blurb (Wave 18) states threads 3, 4, 8, 9 "need expression."
+This is stale — all 10 threads have expression documents as of May 12, 2026.
+What these threads need is **spring validation runs**, not expressions.
 
 ### Upstream Primal Gaps (for primalSpring audit)
 
