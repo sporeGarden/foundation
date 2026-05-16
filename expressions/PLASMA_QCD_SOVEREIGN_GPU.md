@@ -74,9 +74,11 @@ SU(3) gauge theory on 4D lattice with velocity-Verlet/Omelyan/RK3 integrators:
 Industry-standard benchmark comparison for MD:
 
 - 9 Yukawa PP cases validated against LAMMPS + Kokkos CUDA
-- Python orchestrator: `benchmarks/kokkos-lammps/validate_9cases_python.py`
-- Results: `benchmarks/kokkos-lammps/RATCHETING_RESULTS.md`
-- Status: COMPLETE (Papers 43-45)
+- CPU parity baseline: `benchmarks/barracuda_cpu_parity/md_velocity_verlet.py`
+- GPU parity benches: `primals/barraCuda/crates/barracuda/benches/lammps_parity.rs`
+- Kokkos timing comparison: `primals/barraCuda/crates/barracuda/benches/kokkos_parity.rs`
+- Status: COMPLETE (Papers 43-45) — kokkos-lammps orchestrator superseded by
+  barraCuda bench harness + projectFOUNDATION CPU baselines
 
 ## Source Data Anchors
 

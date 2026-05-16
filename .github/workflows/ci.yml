@@ -19,6 +19,8 @@ jobs:
           shellcheck deploy/fetch_sources.sh
           shellcheck deploy/foundation_validate.sh
           shellcheck deploy/backfill_hashes.sh
+          shellcheck deploy/lib/primal_ipc.sh
+          shellcheck deploy/lib/target_compare.sh
 
       - name: Install TOML parser for Python 3.11+
         run: pip install tomli

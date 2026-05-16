@@ -18,7 +18,7 @@
 # Prerequisites:
 #   - NUCLEUS composition running (deploy via projectNUCLEUS):
 #     cd ../projectNUCLEUS/deploy && bash deploy.sh --composition nest --gate irongate
-#   - b3sum, curl, nc (netcat), jq or python3
+#   - b3sum, curl, nc (netcat), python3
 #
 # Environment:
 #   NCBI_API_KEY        Higher NCBI rate limits (optional, recommended)

@@ -8,7 +8,7 @@ thread = 8
 thread_name = "Human Health & Clinical Translation"
 expression = "expressions/SOVEREIGN_HEALTH.md"
 last_updated = "2026-05-11"
-total_targets = 12
+total_targets = 11
 
 # =============================================================================
 # PK/PD: Hill dose-response and compartmental pharmacokinetics

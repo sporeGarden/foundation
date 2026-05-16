@@ -8,7 +8,7 @@ thread = 7
 thread_name = "Anderson Mathematics"
 expression = "expressions/MEASUREMENT_SCIENCE.md"
 last_updated = "2026-05-08"
-total_targets = 24
+total_targets = 23
 
 # =============================================================================
 # Anderson Localization — Lyapunov Exponents (Exp 008)

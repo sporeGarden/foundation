@@ -3,7 +3,7 @@
 **Springs**: ludoSpring (domain validation), primalSpring (composition orchestration)
 **Thread**: 10 (Provenance / Economics)
 **Last Updated**: May 12, 2026
-**Status**: 6 sources, 8 targets, 3 validated. NFT lifecycle + provenance trio end-to-end proven. Co-seeded by ludoSpring + primalSpring.
+**Status**: 6 sources, 8 targets, 5 validated / 3 pending. NFT lifecycle + provenance trio end-to-end proven. Co-seeded by ludoSpring + primalSpring.
 
 ## The Core Question
 

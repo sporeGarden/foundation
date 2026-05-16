@@ -6,7 +6,8 @@ barraCuda CPU parity baseline: Velocity Verlet MD integrator.
 Reference implementation for barraCuda's velocity_verlet_split_f64.wgsl
 GPU kernel. Validates against Sarkas/LAMMPS-equivalent OCP Yukawa regime.
 
-Parity standard: 1e-12 relative error per timestep (Kokkos/LAMMPS agreement).
+Parity standard: <5% relative energy drift over full trajectory (symplectic conservation).
+Industry comparison: Kokkos/LAMMPS achieve 1e-12 per-step with matching dt/force cutoffs.
 Industry references:
   - LAMMPS: fix nve (velocity Verlet for NVE ensemble)
   - Kokkos: parallel force evaluation + Verlet integration
@@ -159,7 +160,9 @@ if __name__ == "__main__":
     print("barraCuda CPU parity: Velocity Verlet MD (Sarkas/LAMMPS regime)")
     print("=" * 60)
     results, all_pass = run_benchmark()
-    results.update(provenance_header())
+    output = {"results": results}
+    output.update(provenance_header())
+    results = output
 
     out_path = "benchmarks/barracuda_cpu_parity/md_velocity_verlet_results.json"
     try:
