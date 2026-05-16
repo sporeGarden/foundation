@@ -83,8 +83,8 @@ segment only.
 
 The NucBox also serves as the `cloudflared` intake for Phase 2a — the
 Cloudflare Tunnel terminates here, USB-C forwards to irongate's
-JupyterHub. See `specs/TUNNEL_EVOLUTION.md` for the systematic
-dependency replacement path.
+JupyterHub. See `projectNUCLEUS/specs/SOVEREIGNTY_STANDARDS.md` for the
+systematic dependency replacement path (sovereign DNS, BTSP cutover).
 
 Gate config: `gates/nuc-intake.toml`
 
@@ -154,7 +154,7 @@ on the NucBox M6 intake — zero NAT config, HTTPS for free, production
 metrics as calibration baselines. Each subsequent step replaces one
 Cloudflare component with a primal, validated via `infra/benchScale`
 load and pen testing. Phase 4 is full BTSP — zero external dependencies.
-See `specs/TUNNEL_EVOLUTION.md` for the systematic replacement plan.
+See `projectNUCLEUS/specs/SOVEREIGNTY_STANDARDS.md` for the replacement plan.
 
 ### Sub-Goal: Sovereign JupyterHub via primals.eco
 

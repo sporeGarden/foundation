@@ -1,6 +1,7 @@
 # Upstream Gaps — JupyterHub Deployment Patterns and Sovereignty Wiring
 
-**Date**: 2026-05-07
+**Date**: 2026-05-07 (geological record)
+**Updated**: 2026-05-16 — JH-0 RESOLVED by MethodGate (Phase 60, per SECURITY_HANDBACK)
 **From**: projectNUCLEUS (irongate)
 **For**: BearDog, biomeOS, NestGate, skunkBat teams, primalSpring
 **Context**: The JupyterHub deployment on irongate is the first real multi-user

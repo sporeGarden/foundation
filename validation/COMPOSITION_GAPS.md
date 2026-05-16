@@ -1,6 +1,7 @@
 # Composition Gaps — wetSpring Through Node Atomic
 
-**Date**: 2026-05-04 (geological record — verify against current NUCLEUS before acting)
+**Date**: 2026-05-04 (geological record — verified May 16, 2026)
+**Updated**: 2026-05-16 — Gap 2 RESOLVED, Gap 3 RESOLVED, counts refreshed
 **Source**: First live composition validation of wetSpring science through
 toadStool dispatch on irongate Node Atomic.
 **Purpose**: Document gaps for other teams to evolve. Each gap is a handoff —
@@ -25,39 +26,32 @@ not a defect, but a known surface area where the next cycle of work lands.
 
 ---
 
-## Gap 2: Sandbox Overrides working_dir to /tmp
+## Gap 2: Sandbox Overrides working_dir to /tmp — RESOLVED
 
 **Primal**: toadStool
-**Severity**: Medium (requires TOML workaround)
-**Observed**: With default `isolation_level = "Standard"`, toadStool overrides `working_dir` to `/tmp` regardless of what the workload TOML specifies. Relative paths in `args` then resolve against `/tmp`.
+**Status**: RESOLVED (2026-05-16)
+**Resolution**: toadStool now supports `trusted_directories` in the
+`[security]` section. All 29 projectFOUNDATION workloads use
+`isolation_level = "Standard"` with explicit trusted directories:
 
-**Impact**:
-- Every workload TOML must use absolute paths in `args` and `command`
-- `working_dir` in the TOML is effectively ignored under Standard isolation
-- Scripts that assume CWD == project root fail silently (e.g., exp001 looking for `MiSeq_SOP`)
+```toml
+[security]
+isolation_level = "Standard"
+trusted_directories = ["${SPRINGS_ROOT}", "${ECOPRIMALS_ROOT}"]
+```
 
-**Workaround applied**: Added `[security] isolation_level = "None"` to all local dev workload TOMLs. Absolute paths used in args.
-
-**Recommendation**: Add a `trusted_directories` list to the sandbox config, or an `allow_working_dir` flag that lets the TOML's `working_dir` pass through when isolation is Standard. This preserves the safety model while enabling real workloads.
+The `isolation_level = "None"` workaround has been fully eliminated.
+See `PROJECTFOUNDATION_DEEP_DEBT_EVOLUTION_HANDOFF_MAY16_2026.md`.
 
 ---
 
-## Gap 3: GPU Build Breakage (wgpu API Drift)
+## Gap 3: GPU Build Breakage (wgpu API Drift) — RESOLVED
 
 **Primal**: barraCuda + wetSpring
-**Severity**: Medium (blocks GPU workloads)
-**Observed**: `cargo build --release --features gpu` fails:
-```
-error[E0599]: no method named `submit_and_poll` found for struct `Arc<WgpuDevice>`
-```
-
-**Root cause**: `WgpuDevice` in barraCuda replaced `submit_and_poll` with `submit_and_map`. wetSpring's `bio/pairwise_l2_gpu.rs` still calls the old API.
-
-**Impact**:
-- GPU-dependent binaries (`validate_anderson_2d_qs`, `validate_qs_disorder_real`) cannot build
-- All CPU parity validators work fine — the GPU feature is additive, not blocking
-
-**Recommendation**: Update `pairwise_l2_gpu.rs` to use `submit_and_map`. This is a one-line API migration, not an architectural change.
+**Status**: RESOLVED (upstream, Wave 17)
+**Resolution**: wetSpring migrated from `submit_and_poll` to `submit_and_map`
+as part of the Wave 17 evolution. barraCuda's API surface is now stable.
+GPU-dependent binaries build successfully with `--features gpu`.
 
 ---
 
@@ -177,9 +171,9 @@ error[E0599]: no method named `submit_and_poll` found for struct `Arc<WgpuDevice
 
 | Priority | Gap | Owner Team | Effort | Status |
 |----------|-----|------------|--------|--------|
-| 1 | Sandbox working_dir passthrough | toadStool | Small | Open |
+| 1 | ~~Sandbox working_dir passthrough~~ | toadStool | Small | **RESOLVED** (trusted_directories) |
 | 2 | Environment variable expansion in TOMLs | toadStool | Small | Open (Gap 8) |
-| 3 | GPU API alignment (submit_and_map) | barraCuda / wetSpring | Small | Open |
+| 3 | ~~GPU API alignment (submit_and_map)~~ | barraCuda / wetSpring | Small | **RESOLVED** (Wave 17) |
 | 4 | Data dependency declaration in TOML | toadStool / nestGate | Medium | Open |
 | 5 | Results archival (--archive flag) | toadStool / nestGate / loamSpine | Medium | Partially closed (wrapper exists) |
 | 6 | Hex string acceptance in loamSpine/rhizoCrypt | loamSpine / rhizoCrypt | Small | Open (Gap 9) |
