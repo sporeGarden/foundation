@@ -35,3 +35,6 @@ chain = "rhizoCrypt"
 attestation = "sweetGrass"
 spine = "loamSpine"
 requires_trio = true
+method_stability = "all_stable"
+methods_consumed = ["session.create", "event.append", "session.complete", "entry.append", "braid.create"]
+braid_evidence_source = "wetSpring ferment transcripts (Barrick 2009, Tenaillon 2016)"

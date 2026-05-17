@@ -38,3 +38,5 @@ chain = "rhizoCrypt"
 attestation = "sweetGrass"
 spine = "loamSpine"
 requires_trio = true
+method_stability = "all_stable"
+methods_consumed = ["session.create", "event.append", "session.complete", "entry.append", "braid.create", "health.version", "health.liveness"]

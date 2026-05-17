@@ -6,7 +6,7 @@ domain thread maps — so that projectNUCLEUS can grow on top and products
 can focus on what matters to their audiences.
 
 **Organization**: sporeGarden (products built on ecoPrimals)
-**Generation**: gen4 — composition and deployment
+**Generation**: gen4 — composition and deployment (Wave 21 absorbed)
 **License**: AGPL-3.0-or-later (code), ORC (system mechanics), CC-BY-SA 4.0 (docs)
 
 ## What This Is
@@ -123,10 +123,13 @@ workloads/          toadStool-executable workload definitions (29 workloads, 10 
 benchmarks/         barraCuda CPU parity baselines (6 scripts, 32 test cases)
 specs/              Contracts and authoring guides
 validation/         Validation results, provenance manifests, gap reports
+  <spring>/<date>/  Spring-oriented dated folders (per PROVENANCE_FOLDER_CONVENTION.md)
+  wetSpring/braids/  Ferment transcript braids (computation-verified provenance)
   handbacks/        Geological record from projectNUCLEUS deployment validation
-  COMPOSITION_GAPS.md  Composition-level capability mismatches
+  COMPOSITION_GAPS.md  Composition-level capability mismatches (Wave 20 resolutions marked)
 docs/               External-facing primers and guides
   BONDING_MODELS.md Atomic bonding architecture (covalent/ionic/metallic)
+  DEGRADATION_BEHAVIOR.md  Pipeline degradation matrix (per ecosystem standard)
   NUCLEUS_PRIMER.md Ecosystem primer — orientation for new contributors
 ```
 

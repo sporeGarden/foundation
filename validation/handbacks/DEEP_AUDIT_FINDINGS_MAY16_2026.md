@@ -2,6 +2,8 @@
 
 **Audit scope**: Full codebase, specs, docs, benchmarks, CI, data manifests, workloads
 **Context**: Post-primalSpring Wave 18, post-CATHEDRAL split
+**Updated**: May 17, 2026 — Wave 21 absorption (canonical schemas, stability tiers,
+degradation behavior, partial trio, ferment transcript preparation)
 
 ---
 

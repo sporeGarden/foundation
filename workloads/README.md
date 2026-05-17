@@ -102,6 +102,31 @@ trusted_directories = ["${SPRINGS_ROOT}", "${ECOPRIMALS_ROOT}"]
 | `anderson-math-validation` | 22 Anderson math targets across groundSpring + neuralSpring |
 | `litho-anderson-integration` | lithoSpore Module 7 → Thread 7 anchoring (5/5 PASS) |
 
+## Method Stability Tiers
+
+As of Wave 20, all primal methods carry stability annotations in
+`capability_registry.toml`. Workloads that depend on primal methods
+should be aware of their stability tier:
+
+| Tier | Meaning | Workload Guidance |
+|------|---------|-------------------|
+| **stable** | Wire name frozen | Safe to reference directly in workload TOMLs |
+| **evolving** | May change with deprecation cycle | Document the dependency; watch wateringHole |
+| **internal** | Implementation detail | Do not depend on from workloads |
+
+Workloads that use **stable** methods (e.g., `toadstool.validate`,
+`session.create`, `entry.append`, `braid.create`, `health.version`,
+`health.liveness`) can reference them directly. Workloads depending on
+**evolving** methods should note this in `[metadata]`:
+
+```toml
+[metadata]
+method_dependencies = ["toadstool.validate"]
+method_stability_notes = "All consumed methods are stable (Wave 20)"
+```
+
+The full registry is at `primalSpring/docs/capability_registry.toml`.
+
 ## Execution
 
 Workloads are executed via `toadstool.validate` (preferred) or direct dispatch:

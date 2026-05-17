@@ -510,6 +510,17 @@ $(echo -e "$WORKLOAD_TABLE")
 
 **Total**: $TOTAL_OK OK / $TOTAL_FAIL FAIL / $TOTAL_SKIP SKIP
 
+## Degradation State
+
+| Aspect | Value |
+|--------|-------|
+| Discovery fallbacks | $DISCOVERY_FALLBACK_COUNT |
+| Provenance warnings | $PROVENANCE_WARN |
+| Trio state | $(if [[ -n "$BRAID_URN" && "$BRAID_URN" != "unknown" ]]; then echo "Full (DAG+spine+braid)"; elif [[ -n "$SPINE_ID" && "$SPINE_ID" != "unknown" ]]; then echo "Partial (DAG+spine)"; elif [[ -n "$SESSION_ID" && "$SESSION_ID" != "unknown" ]]; then echo "Partial (DAG only)"; else echo "Standalone (no trio)"; fi) |
+
+> Science is never gated behind primal availability. Partial provenance
+> is valid provenance. See \`docs/DEGRADATION_BEHAVIOR.md\`.
+
 ## Sediment Layer
 
 This validation run is now a permanent layer in the foundation's
@@ -542,6 +553,11 @@ merkle_root = "$MERKLE_ROOT"
 spine_id = "$SPINE_ID"
 braid_urn = "$BRAID_URN"
 provenance_warnings = $PROVENANCE_WARN
+
+[degradation]
+discovery_fallbacks = $DISCOVERY_FALLBACK_COUNT
+provenance_partial = $PROVENANCE_WARN
+trio_state = "$(if [[ -n "$BRAID_URN" && "$BRAID_URN" != "unknown" ]]; then echo "full"; elif [[ -n "$SPINE_ID" && "$SPINE_ID" != "unknown" ]]; then echo "dag_spine"; elif [[ -n "$SESSION_ID" && "$SESSION_ID" != "unknown" ]]; then echo "dag_only"; else echo "standalone"; fi)"
 PROVTOML
 
 log "  [OK] Provenance: $RESULTS_DIR/provenance.toml"

@@ -24,14 +24,20 @@ validation/
   <spring>/
     <YYYY-MM-DD>/
       results.json          ValidationResult export
-      provenance.toml       Run metadata (tier, primals, duration)
+      provenance.toml       Run metadata (tier, primals, duration, degradation state)
       braid.json            sweetGrass attribution braid
       *.stdout              Raw output logs
+    braids/                 Ferment transcript braids (computation-verified provenance)
+      <dataset_id>.json     Machine-verifiable upstream computation record
 ```
 
 Example: `validation/hotSpring/2026-05-11/` for hotSpring's May 11 run.
+Example: `validation/wetSpring/braids/barrick_2009_mutations.json` for ferment braid.
 
 See `PROVENANCE_FOLDER_CONVENTION.md` for the full template.
+
+Partial trio provenance is valid per the ecosystem degradation behavior
+standard. See `docs/DEGRADATION_BEHAVIOR.md`.
 
 ### Legacy thread-oriented (preserved as geological record)
 
@@ -73,7 +79,7 @@ need to evolve:
 | 2 — Plasma Physics | 2026-05-11 | hotSpring v0.6.32 | 12/12 PASS | Validated |
 | 3 — Immunology | — | healthSpring | Pending | Expression + targets ready, spring validation pending |
 | 4 — Env Genomics | — | wetSpring, airSpring | Pending | Expression + 13 targets ready, spring validation pending |
-| 5 — LTEE / Evolution | — | groundSpring, wetSpring, hotSpring, neuralSpring | 14/18 partial | 4 pending (wetSpring B7) |
+| 5 — LTEE / Evolution | — | groundSpring, wetSpring, hotSpring, neuralSpring | 14/18 partial | 4 pending — braid evidence from wetSpring ferment transcripts |
 | 6 — Agricultural Science | 2026-05-11 | airSpring v0.10.0 | 36/36 PASS | Validated |
 | 7 — Anderson Mathematics | 2026-05-11 | groundSpring V142 | 18/18 PASS | Validated |
 | 8 — Human Health | — | healthSpring | Pending | Expression ready, spring expanding |

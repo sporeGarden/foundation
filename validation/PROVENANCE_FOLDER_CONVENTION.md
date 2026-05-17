@@ -11,8 +11,10 @@ validation/
     <YYYY-MM-DD>/
       results.json         ValidationResult export from the spring
       provenance.toml      Run metadata: tier, primals, duration, methods
-      braid.json           sweetGrass attribution braid (if provenance trio available)
+      braid.json           sweetGrass attribution braid (if trio available)
       *.stdout             Raw validation output logs
+    braids/                Ferment transcript braids (computation-verified provenance)
+      <dataset_id>.json    Machine-verifiable computation record
 ```
 
 ## Example
@@ -66,6 +68,28 @@ Existing validation runs (`wcm-20260509/`, `plasma-20260511/`, etc.) are
 preserved as geological record. New runs use the spring-oriented convention.
 The `foundation_validate.sh` pipeline writes to `validation/run-<timestamp>/`
 for ad-hoc runs; results should be sorted into spring folders post-run.
+
+## Partial Trio Completion
+
+Per `wateringHole/PROVENANCE_TRIO_INTEGRATION_GUIDE.md`, partial
+provenance is valid. If only some trio primals are reachable, record
+whatever is available:
+
+- **Full**: dag_session_id + spine_id + braid_urn (all populated)
+- **DAG + spine**: dag_session_id + spine_id (braid_urn empty)
+- **DAG only**: dag_session_id only (spine_id and braid_urn empty)
+- **Standalone**: All provenance fields empty (science still valid)
+
+No rollback on partial. The consumer decides whether partial is acceptable.
+
+## Ferment Transcript Braids
+
+The `braids/` subfolder within a spring directory holds ferment transcript
+braids — computation-verified provenance records from real-data pipelines.
+These are distinct from run-level `braid.json` (which covers a validation
+session) and instead prove specific upstream computations.
+
+See `validation/wetSpring/braids/README.md` for the wire format.
 
 ## Who Creates These
 

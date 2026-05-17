@@ -1,7 +1,9 @@
 # Composition Gaps — wetSpring Through Node Atomic
 
-**Date**: 2026-05-04 (geological record — verified May 16, 2026)
-**Updated**: 2026-05-16 — Gap 2 RESOLVED, Gap 3 RESOLVED, counts refreshed
+**Date**: 2026-05-04 (geological record — verified May 17, 2026)
+**Updated**: 2026-05-17 — Wave 21 absorption. Gaps 2,3 RESOLVED (May 16).
+Canonical schemas (primal.list, capability.list) SHIPPED upstream (Wave 20).
+UB-1 through UB-4 SHIPPED. Partial trio semantics documented.
 **Source**: First live composition validation of wetSpring science through
 toadStool dispatch on irongate Node Atomic.
 **Purpose**: Document gaps for other teams to evolve. Each gap is a handoff —
@@ -154,16 +156,53 @@ GPU-dependent binaries build successfully with `--features gpu`.
 
 ---
 
+## Wave 20 Resolutions (upstream)
+
+The following items were previously referenced as gaps or upstream blockers
+in this document and in `UPSTREAM_AUDIT_PREP_MAY15_2026.md`. They are now
+**SHIPPED** as of primalSpring Wave 20:
+
+| Item | Status | Detail |
+|------|--------|--------|
+| `primal.list` canonical schema | **SHIPPED** | `{ "primals": [...], "count": N }` envelope guaranteed |
+| `capability.list` canonical schema | **SHIPPED** | `{ "capabilities": [...], "count": N, "primal": "name" }` |
+| UB-1: Discovery chain canonicalization | **SHIPPED** | Wire format standardized |
+| UB-2: Method registration parity | **SHIPPED** | 452 methods registered (Wave 20) |
+| UB-3: Graph hygiene | **SHIPPED** | Structure validation in primalSpring |
+| UB-4: Port ladder documentation | **SHIPPED** | Per-primal port docs |
+| Method stability tiers | **SHIPPED** | `stable` / `evolving` / `internal` in capability_registry.toml |
+| Degradation behavior standard | **SHIPPED** | All 8 springs document per-primal degradation |
+| Trio partial completion semantics | **SHIPPED** | `PROVENANCE_TRIO_INTEGRATION_GUIDE.md` in wateringHole |
+
+## Trio Partial Completion Policy
+
+Per `wateringHole/PROVENANCE_TRIO_INTEGRATION_GUIDE.md` (Wave 20):
+
+| State | DAG | Spine | Braid | Valid? |
+|-------|:---:|:-----:|:-----:|:------:|
+| Full | YES | YES | YES | YES — complete provenance chain |
+| Partial (DAG+spine) | YES | YES | no | YES — ledger entry, no attribution |
+| Partial (DAG only) | YES | no | no | YES — session recorded, unbacked |
+| None | no | no | no | YES — standalone mode |
+
+**No rollback on partial.** `foundation_validate.sh` already handles this:
+when trio primals are unreachable, it logs `[WARN]` and continues. Partial
+provenance is valid provenance — a DAG session ID without a braid is better
+than no provenance at all.
+
+---
+
 ## Wins
 
-1. **toadStool dispatch works end-to-end**: 11 workload TOMLs loaded, parsed, dispatched, and executed without modification to any primal binary
-2. **235+ Rust validation checks passed through composition dispatch**: Full parity with standalone execution — the composition layer adds zero regression
+1. **toadStool dispatch works end-to-end**: 29 workload TOMLs loaded, parsed, dispatched, and executed without modification to any primal binary
+2. **13,100+ Rust validation checks** across 8 springs via composition dispatch
 3. **Real NCBI data processed**: 11.9M paired-end reads (PRJNA488170) through Rust validators, 50K reads through Python baseline
 4. **Full provenance pipeline operational**: BLAKE3 → rhizoCrypt DAG → loamSpine ledger → sweetGrass braid, all via JSON-RPC
 5. **13 primals stable**: Full NUCLEUS ran for hours across all validation sessions without crashes
 6. **TOML workload format is expressive**: The `[metadata]` + `[execution]` + `[resources]` + `[security]` structure covers the dispatch needs well
 7. **Sub-millisecond dispatch overhead**: Rust binaries completed in 1-2ms including toadStool's orchestrator initialization — the dispatch layer is not a bottleneck
 8. **Provenance wrapper pattern validated**: Shell script successfully brackets toadStool execution with pre/post RPC calls to the trio, proving the composition model for provenance
+9. **6 CPU parity baselines** (32 test cases) validate Tier 1→2 parity for barraCuda kernels
 
 ---
 

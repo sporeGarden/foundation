@@ -1,12 +1,23 @@
-# barraCuda CPU Parity Baselines
+# barraCuda CPU Parity Baselines — Tier 1→2 Parity Proofs
 
 Python (scipy/numpy) reference implementations for operations that
 barraCuda implements in pure Rust + WGSL GPU compute.
 
-These baselines serve as ground truth for numerical parity verification:
+These baselines are **Tier 1→2 parity proofs** per the ecosystem
+validation tier model (see `primalSpring/docs/VALIDATION_TIERS.md`):
+
+```
+Tier 1: Python script → expected results (this directory)
+Tier 2: Rust validator → compare against Python expected results
+Tier 3: Primal composition → verify computation chain via provenance trio
+```
+
+Parity verification rules:
 - Rust CPU results must match Python within documented tolerances
 - GPU results must match Rust CPU within IEEE 754 bounds
 - Any deviation must be named, justified, and minimal
+- Results are exported as JSON for consumption by lithoSpore's
+  `ParityReport` format (ecosystem standard for cross-tier parity)
 
 ## Operations Covered
 
