@@ -51,6 +51,11 @@ max_cpu_percent = 20.0
 isolation_level = "Standard"
 trusted_directories = ["${FOUNDATION_ROOT}", "${ECOPRIMALS_ROOT}"]
 
+[skip]
+when = "binary_missing"
+binary = "b3sum"
+reason = "b3sum required for BLAKE3 content addressing of pathway files"
+
 [provenance]
 chain = "rhizoCrypt"
 attestation = "sweetGrass"

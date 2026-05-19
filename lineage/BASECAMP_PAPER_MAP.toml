@@ -47,11 +47,28 @@ springs = ["wetSpring", "neuralSpring", "groundSpring", "hotSpring"]
 checks = 0
 experiments = 0
 key_finding = "Constrained evolution predictions for LTEE, permafrost, vent archives"
-ncbi_anchors = ["PRJNA29543", "PRJNA380528", "PRJNA188627", "PRJNA294072"]
-other_anchors = ["Lenski LTEE frozen fossil collection", "Dryad doi:10.5061/dryad.0hc2m"]
+ncbi_anchors = [
+    # Broader frozen-fossil scope (permafrost, vent archives)
+    "PRJNA29543", "PRJNA380528", "PRJNA188627",
+    # LTEE reproduction stack (aligned with thread05_ltee.toml)
+    "CP000819.1",   # REL606 ancestor genome (B1, common)
+    "SRP001064",    # Barrick 2009 SRA (B1)
+    "PRJNA188989",  # Wiser 2013 population data (B2)
+    "SRP073287",    # Good 2017 metagenomes (B3)
+    "PRJNA294072",  # Tenaillon 2016 BioProject (B7)
+    "SRP064605",    # Tenaillon 2016 SRA (B7)
+    "PRJNA295606",  # Tenaillon 2016 VCFs (B7)
+    "U00096.3",     # K-12 MG1655 outgroup (common)
+]
+other_anchors = [
+    "Lenski LTEE frozen fossil collection",
+    "Dryad doi:10.5061/dryad.0hc2m",   # Good 2017 (B3)
+    "Dryad doi:10.5061/dryad.2340",     # Barrick 2009 (B1)
+    "Dryad doi:10.5061/dryad.7qk44",   # Wiser 2013 fitness (B2)
+]
 data_sources = "data/sources/thread05_ltee.toml"
 contacts = []
-notes = "groundSpring B1 (8/8) + B2 (10/10) reproduced. lithoSpore integration ready for modules 1+2."
+notes = "groundSpring B1 (8/8) + B2 (10/10) reproduced. lithoSpore integration ready for modules 1+2. All 11 LTEE sources aligned with thread05_ltee.toml."
 
 # =============================================================================
 # Paper 03: Precision Microbiome for Tree Crops

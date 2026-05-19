@@ -69,6 +69,11 @@ working_dir = "${FOUNDATION_ROOT}"
 max_memory_bytes = 268435456
 max_cpu_percent = 25.0
 
+[skip]
+when = "binary_missing"
+binary = "${LITHOSPORE_ROOT}/target/release/ltee-anderson"
+reason = "lithoSpore Module 7 binary required — build with cargo build --release in lithoSpore"
+
 [provenance]
 chain = "rhizoCrypt"
 attestation = "sweetGrass"

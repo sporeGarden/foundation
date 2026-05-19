@@ -48,7 +48,7 @@ while [[ $# -gt 0 ]]; do
         --results-dir) RESULTS_DIR="$2"; shift 2 ;;
         -h|--help)
             echo "Usage: $0 [--thread THREAD] [--skip-fetch] [--data-dir DIR]"
-            echo "Threads: wcm, plasma, immuno, enviro, ltee, ag, anderson, health, gaming, provenance, all"
+            thread_help_text
             exit 0 ;;
         *)             echo "Unknown option: $1"; exit 1 ;;
     esac
@@ -59,6 +59,13 @@ mkdir -p "$RESULTS_DIR"
 # Source shared IPC helpers (discovery, RPC clients, hashing)
 # shellcheck source=lib/primal_ipc.sh
 source "$SCRIPT_DIR/lib/primal_ipc.sh"
+# shellcheck source=lib/json_rpc.sh
+source "$SCRIPT_DIR/lib/json_rpc.sh"
+# shellcheck source=lib/thread_registry.sh
+source "$SCRIPT_DIR/lib/thread_registry.sh"
+
+# Gate name: read from env, discovery, or default
+GATE_NAME="${GATE_NAME:-${NUCLEUS_GATE:-irongate}}"
 
 BEARDOG_PORT=$(discover_port "beardog" "9100")
 SONGBIRD_PORT=$(discover_port "songbird" "9200")
@@ -104,18 +111,14 @@ rpc_health() {
     fi
 
     if [[ "$name" == "rhizoCrypt" ]]; then
-        local rhizo_sock="${XDG_RUNTIME_DIR:-/tmp/biomeos}/biomeos/rhizocrypt-${FAMILY_ID:-}.sock"
+        local rhizo_sock="${XDG_RUNTIME_DIR:-/tmp}/ecoPrimals/rhizocrypt-${FAMILY_ID:-}.sock"
         if [[ -S "$rhizo_sock" ]]; then
             local rhizo_resp
             rhizo_resp=$(rpc_rhizocrypt '{"jsonrpc":"2.0","method":"health.liveness","params":{},"id":0}')
-            if [[ -n "$rhizo_resp" ]] && echo "$rhizo_resp" | grep -q '"result"'; then
+            if rpc_has_result "$rhizo_resp"; then
                 log "  [OK] $name (UDS $rhizo_sock)"
                 return 0
             fi
-        fi
-        if pgrep -f "primals/rhizocrypt" >/dev/null 2>&1; then
-            log "  [OK] $name (PID alive, UDS not verified)"
-            return 0
         fi
         log "  [FAIL] $name not running"
         return 1
@@ -124,13 +127,13 @@ rpc_health() {
     resp=$(curl -sf --max-time 3 "http://${PRIMAL_HOST}:$port" \
         -X POST -H 'Content-Type: application/json' \
         -d '{"jsonrpc":"2.0","method":"health.liveness","params":{},"id":0}' 2>/dev/null) || resp=""
-    if [[ -n "$resp" ]] && echo "$resp" | grep -q '"result"'; then
+    if rpc_has_result "$resp"; then
         log "  [OK] $name (TCP $port)"
         return 0
     fi
 
     resp=$(printf '{"jsonrpc":"2.0","method":"health.liveness","params":{},"id":0}\n' | nc -w 3 "$PRIMAL_HOST" "$port" 2>/dev/null) || resp=""
-    if [[ -n "$resp" ]] && echo "$resp" | grep -q '"result"'; then
+    if rpc_has_result "$resp"; then
         log "  [OK] $name (TCP $port)"
         return 0
     fi
@@ -160,7 +163,7 @@ if [[ $HEALTH_FAIL -gt 0 ]]; then
     log "  $HEALTH_FAIL required primal(s) not responding (provenance trio: NestGate, rhizoCrypt, loamSpine)."
     log "  Deploy NUCLEUS first:"
     log "    cd $NUCLEUS_ROOT/deploy"
-    log "    bash deploy.sh --composition nest --gate irongate"
+    log "    bash deploy.sh --composition nest --gate $GATE_NAME"
     exit 1
 fi
 
@@ -176,7 +179,7 @@ log "── Phase 2: Create Provenance Session ──"
 
 SESSION_NAME="foundation-$THREAD_FILTER-$(date +%Y%m%d-%H%M%S)"
 SESSION_RESP=$(rpc_rhizocrypt "{\"jsonrpc\":\"2.0\",\"method\":\"dag.session.create\",\"params\":{\"session_type\":\"Experiment\",\"description\":\"$SESSION_NAME\"},\"id\":1}")
-SESSION_ID=$(echo "$SESSION_RESP" | python3 -c "import sys,json; r=json.load(sys.stdin); print(r.get('result',{}).get('session_id','') or r.get('result',''))" 2>/dev/null) || SESSION_ID=""
+SESSION_ID=$(rpc_extract_field "$SESSION_RESP" "session_id")
 
 if [[ -z "$SESSION_ID" ]]; then
     log "  [FAIL] Could not create DAG session: $SESSION_RESP"
@@ -185,7 +188,7 @@ fi
 log "  [OK] DAG Session: $SESSION_ID"
 
 SPINE_RESP=$(rpc_loamspine "{\"jsonrpc\":\"2.0\",\"method\":\"spine.create\",\"params\":{\"name\":\"$SESSION_NAME\",\"owner\":\"foundation\"},\"id\":2}")
-SPINE_ID=$(echo "$SPINE_RESP" | python3 -c "import sys,json; print(json.load(sys.stdin)['result']['spine_id'])" 2>/dev/null) || SPINE_ID=""
+SPINE_ID=$(rpc_extract_field "$SPINE_RESP" "spine_id")
 
 if [[ -z "$SPINE_ID" ]]; then
     log "  [FAIL] Could not create spine: $SPINE_RESP"
@@ -335,18 +338,31 @@ execute_workload() {
         fi
     else
         log "  [$name] toadStool not found at $TOADSTOOL — running command directly"
-        local cmd args
-        read -r cmd args < <(python3 -c "
-import tomllib, sys
+        local cmd_line
+        cmd_line=$(python3 -c "
+import sys, json
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
 with open('$toml_path', 'rb') as f:
     d = tomllib.load(f)
 exe = d.get('execution', {})
-c = exe.get('command', '')
-a = ' '.join(exe.get('args', []))
-print(c, a)
-" 2>/dev/null) || { cmd=""; args=""; }
+cmd = exe.get('command', '')
+args = exe.get('args', [])
+# Output as JSON array for safe parsing
+print(json.dumps([cmd] + args))
+" 2>/dev/null) || cmd_line="[]"
+        local cmd
+        cmd=$(echo "$cmd_line" | python3 -c "import sys,json; a=json.load(sys.stdin); print(a[0] if a else '')")
         if [[ -n "$cmd" && -x "$cmd" ]]; then
-            $cmd $args > "$output_file" 2>&1 || true
+            # Build command array safely from JSON
+            readarray -t cmd_array < <(echo "$cmd_line" | python3 -c "
+import sys,json
+for x in json.load(sys.stdin):
+    print(x)
+")
+            "${cmd_array[@]}" > "$output_file" 2>&1 || true
         else
             echo "[SKIP] No executable found" > "$output_file"
         fi
@@ -357,9 +373,7 @@ print(c, a)
     local elapsed=$((end_time - start_time))
 
     local ok_count fail_count skip_count
-    ok_count=$(grep -c '\[OK\]' "$output_file" 2>/dev/null || echo 0)
-    fail_count=$(grep -c '\[FAIL\]' "$output_file" 2>/dev/null || echo 0)
-    skip_count=$(grep -c '\[SKIP\]' "$output_file" 2>/dev/null || echo 0)
+    read -r ok_count fail_count skip_count < <(parse_workload_results "$output_file")
     TOTAL_OK=$((TOTAL_OK + ok_count))
     TOTAL_FAIL=$((TOTAL_FAIL + fail_count))
     TOTAL_SKIP=$((TOTAL_SKIP + skip_count))
@@ -384,7 +398,12 @@ print(c, a)
 if [[ "$THREAD_FILTER" == "all" ]]; then
     SCAN_DIRS=("$WORKLOAD_DIR"/thread* "$WORKLOAD_DIR"/groundspring "$WORKLOAD_DIR"/hotspring)
 else
-    SCAN_DIRS=("$WORKLOAD_DIR/thread"*"$THREAD_FILTER"*)
+    local_prefix=$(resolve_thread_dir "$THREAD_FILTER")
+    if [[ -n "$local_prefix" && -d "$WORKLOAD_DIR/${local_prefix}_${THREAD_FILTER}" ]]; then
+        SCAN_DIRS=("$WORKLOAD_DIR/${local_prefix}_${THREAD_FILTER}")
+    else
+        SCAN_DIRS=("$WORKLOAD_DIR/thread"*"$THREAD_FILTER"*)
+    fi
 fi
 
 for dir in "${SCAN_DIRS[@]}"; do
@@ -430,11 +449,8 @@ log "── Phase 7: Commit Provenance ──"
 PROVENANCE_WARN=0
 
 COMPLETE_RESP=$(rpc_rhizocrypt "{\"jsonrpc\":\"2.0\",\"method\":\"dag.session.complete\",\"params\":{\"session_id\":\"$SESSION_ID\"},\"id\":800}")
-MERKLE_ROOT=$(echo "$COMPLETE_RESP" | python3 -c "
-import sys,json
-r = json.load(sys.stdin).get('result',{})
-print(r.get('merkle_root','') or r.get('root','') or '')
-" 2>/dev/null) || MERKLE_ROOT=""
+MERKLE_ROOT=$(rpc_extract_field "$COMPLETE_RESP" "merkle_root")
+[[ -z "$MERKLE_ROOT" ]] && MERKLE_ROOT=$(rpc_extract_field "$COMPLETE_RESP" "root")
 if [[ -n "$MERKLE_ROOT" && "$MERKLE_ROOT" != "unknown" ]]; then
     log "  [OK] DAG Merkle root: $MERKLE_ROOT"
 else
@@ -445,7 +461,7 @@ fi
 
 MERKLE_BYTES=$(hash_to_byte_array "${MERKLE_ROOT:-0000000000000000000000000000000000000000000000000000000000000000}")
 COMMIT_RESP=$(rpc_loamspine "{\"jsonrpc\":\"2.0\",\"method\":\"entry.append\",\"params\":{\"spine_id\":\"$SPINE_ID\",\"entry_type\":{\"SessionCommit\":{\"session_hash\":$MERKLE_BYTES}},\"committer\":\"did:primal:foundation\",\"data\":{\"session\":\"$SESSION_NAME\",\"merkle_root\":\"$MERKLE_ROOT\",\"events\":$EVENT_IDX,\"ok\":$TOTAL_OK,\"fail\":$TOTAL_FAIL}},\"id\":801}")
-if echo "$COMMIT_RESP" | grep -q '"result"' 2>/dev/null; then
+if rpc_has_result "$COMMIT_RESP"; then
     log "  [OK] loamSpine committed"
 else
     log "  [WARN] loamSpine commit may have failed: $COMMIT_RESP"
@@ -453,11 +469,8 @@ else
 fi
 
 BRAID_RESP=$(rpc_sweetgrass "{\"jsonrpc\":\"2.0\",\"method\":\"braid.create\",\"params\":{\"creator\":\"did:primal:foundation\",\"subject\":\"foundation-validation:$SESSION_NAME\",\"claims\":[{\"type\":\"ProvenanceValidation\",\"data\":{\"session\":\"$SESSION_NAME\",\"merkle_root\":\"$MERKLE_ROOT\",\"ok\":$TOTAL_OK,\"fail\":$TOTAL_FAIL,\"events\":$EVENT_IDX}}]},\"id\":802}")
-BRAID_URN=$(echo "$BRAID_RESP" | python3 -c "
-import sys,json
-r = json.load(sys.stdin).get('result',{})
-print(r.get('urn','') or r.get('id','') or '')
-" 2>/dev/null) || BRAID_URN=""
+BRAID_URN=$(rpc_extract_field "$BRAID_RESP" "urn")
+[[ -z "$BRAID_URN" ]] && BRAID_URN=$(rpc_extract_field "$BRAID_RESP" "id")
 if [[ -n "$BRAID_URN" && "$BRAID_URN" != "unknown" ]]; then
     log "  [OK] sweetGrass braid: $BRAID_URN"
 else
@@ -484,7 +497,7 @@ cat > "$RESULTS_DIR/VALIDATION_REPORT.md" << REPORT
 **Session**: $SESSION_NAME
 **Thread**: $THREAD_FILTER
 **Date**: $(date -Iseconds)
-**NUCLEUS Gate**: irongate
+**NUCLEUS Gate**: $GATE_NAME
 
 ## Provenance Chain
 
@@ -538,7 +551,7 @@ cat > "$RESULTS_DIR/provenance.toml" << PROVTOML
 session = "$SESSION_NAME"
 thread = "$THREAD_FILTER"
 date = "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-gate = "irongate"
+gate = "$GATE_NAME"
 composition = "nest"
 
 [results]

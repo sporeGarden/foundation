@@ -21,6 +21,8 @@ jobs:
           shellcheck deploy/backfill_hashes.sh
           shellcheck deploy/lib/primal_ipc.sh
           shellcheck deploy/lib/target_compare.sh
+          shellcheck deploy/lib/json_rpc.sh
+          shellcheck deploy/lib/thread_registry.sh
 
       - name: Install TOML parser for Python 3.11+
         run: pip install tomli
@@ -380,6 +382,31 @@ jobs:
 
           print(f'{errors} error(s)' if errors else 'Thread 1 WCM integrity: PASS')
           sys.exit(1 if errors else 0)
+          "
+
+      - name: Workload skip section coverage
+        run: |
+          python3 -c "
+          import sys, pathlib
+          try:
+              import tomllib
+          except ImportError:
+              import tomli as tomllib
+
+          missing = []
+          total = 0
+          for f in sorted(pathlib.Path('workloads').rglob('*.toml')):
+              total += 1
+              data = tomllib.loads(f.read_text())
+              if 'skip' not in data:
+                  missing.append(str(f))
+
+          if missing:
+              print(f'FAIL: {len(missing)}/{total} workloads missing [skip] section:')
+              for m in missing:
+                  print(f'  - {m}')
+              sys.exit(1)
+          print(f'All {total} workloads have [skip] sections')
           "
 
       - name: Gate naming consistency

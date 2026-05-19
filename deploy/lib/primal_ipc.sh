@@ -21,10 +21,17 @@ discover_port() {
 
     local discovery_sock="${XDG_RUNTIME_DIR:-/tmp}/ecoPrimals/discovery.sock"
     if [[ -S "$discovery_sock" ]]; then
-        local port
-        port=$(echo "{\"jsonrpc\":\"2.0\",\"method\":\"capability.resolve\",\"params\":{\"primal\":\"$name\"},\"id\":1}" \
-            | nc -w 2 -U "$discovery_sock" 2>/dev/null \
-            | python3 -c "import sys,json; print(json.load(sys.stdin).get('result',{}).get('port',''))" 2>/dev/null)
+        local disc_resp port
+        disc_resp=$(echo "{\"jsonrpc\":\"2.0\",\"method\":\"capability.resolve\",\"params\":{\"primal\":\"$name\"},\"id\":1}" \
+            | nc -w 2 -U "$discovery_sock" 2>/dev/null) || disc_resp=""
+        port=$(python3 -c "
+import sys, json
+try:
+    r = json.loads(sys.argv[1])
+    print(r.get('result',{}).get('port',''))
+except Exception:
+    print('')
+" "$disc_resp" 2>/dev/null)
         if [[ -n "$port" ]]; then echo "$port"; return; fi
     fi
 
@@ -42,7 +49,7 @@ rpc_nestgate() {
 }
 
 rpc_rhizocrypt() {
-    local sock="${XDG_RUNTIME_DIR:-/tmp/biomeos}/biomeos/rhizocrypt-${FAMILY_ID:-}.sock"
+    local sock="${XDG_RUNTIME_DIR:-/tmp}/ecoPrimals/rhizocrypt-${FAMILY_ID:-}.sock"
     if [[ -S "$sock" ]]; then
         python3 -c "
 import socket, sys, json

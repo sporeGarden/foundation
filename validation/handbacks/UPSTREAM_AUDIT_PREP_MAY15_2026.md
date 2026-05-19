@@ -94,7 +94,7 @@ standard are absorbed. Trio partial completion semantics documented.
 - Pipeline Phase 4 now manifest-driven (reads source TOMLs before glob fallback)
 - `[SKIP]` counting added throughout pipeline and report
 - Script modularized (535 + 92 + 92 lines across 3 files)
-- 33 `ironGate` → `irongate` naming fixes across 11 files
+- 33 naming fixes (camelCase → lowercase "irongate") across 11 files
 - CI expanded with target schema validation, workload integrity, gate naming enforcement
 - Thread 9 gaming targets migrated to numeric schema
 - Benchmark provenance headers added to all 3 Python baselines
