@@ -125,6 +125,7 @@ jobs:
               import tomli as tomllib
           total_hashed = 0
           total_sources = 0
+          per_file = {}
           for f in sorted(pathlib.Path('data/sources').glob('*.toml')):
               data = tomllib.loads(f.read_text())
               sources = data.get('source', data.get('sources', []))
@@ -141,12 +142,22 @@ jobs:
                       total_hashed += 1
                   else:
                       empty += 1
+              per_file[f.name] = (hashed, hashed + empty)
               print(f'{f.name}: {hashed}/{hashed + empty} hashed')
           pct = (total_hashed / total_sources * 100) if total_sources > 0 else 0
           print(f'Overall: {total_hashed}/{total_sources} ({pct:.0f}%)')
-          # Fail if hash coverage drops below current baseline
-          if total_sources > 0 and pct < 0:
-              print('::error::Hash coverage below threshold')
+
+          # Thread 1 WCM: gate on non-regression (baseline: 10 hashed)
+          wcm = per_file.get('thread01_wcm.toml', (0, 0))
+          if wcm[0] < 10:
+              print(f'::error::Thread 1 WCM hash regression: {wcm[0]}/10 (baseline 10)')
+              sys.exit(1)
+          else:
+              print(f'Thread 1 WCM: {wcm[0]}/{wcm[1]} hashed (baseline: 10)')
+
+          # Overall non-regression (baseline: 10 hashed sources)
+          if total_hashed < 10:
+              print(f'::error::Overall hash regression: {total_hashed} < 10')
               sys.exit(1)
           "
 
@@ -269,6 +280,65 @@ jobs:
                   print(f'WARN: {f.name}: no meta.total_targets declared')
 
           print(f'{errors} count mismatch(es)' if errors else 'All target counts match')
+          sys.exit(1 if errors else 0)
+          "
+
+      - name: Thread 1 WCM source-target integrity
+        run: |
+          python3 -c "
+          import sys, pathlib
+          try:
+              import tomllib
+          except ImportError:
+              import tomli as tomllib
+
+          errors = 0
+
+          # Verify sources file exists and parses
+          src_path = pathlib.Path('data/sources/thread01_wcm.toml')
+          src_data = tomllib.loads(src_path.read_text())
+          sources = src_data.get('sources', [])
+          hashed = [s for s in sources if s.get('blake3', '')]
+          print(f'Thread 1 WCM sources: {len(sources)} total, {len(hashed)} with BLAKE3')
+
+          # Verify targets file exists and parses
+          tgt_path = pathlib.Path('data/targets/thread01_wcm_targets.toml')
+          tgt_data = tomllib.loads(tgt_path.read_text())
+          targets = tgt_data.get('targets', [])
+          meta = tgt_data.get('meta', {})
+          declared = meta.get('total_targets', 0)
+          print(f'Thread 1 WCM targets: {len(targets)} total (declared: {declared})')
+
+          # Every target must reference a valid spring
+          valid_springs = {'hotSpring', 'wetSpring', 'groundSpring', 'airSpring',
+                           'healthSpring', 'neuralSpring', 'ludoSpring', 'primalSpring'}
+          for t in targets:
+              spring = t.get('spring', '')
+              if spring and spring not in valid_springs:
+                  print(f'WARN: target {t.get(\"id\",\"?\")} references unknown spring: {spring}')
+
+              ev = t.get('expected_value')
+              has_tol = 'tolerance' in t or 'tolerance_pct' in t
+              if ev is not None and not has_tol:
+                  print(f'FAIL: target {t.get(\"id\",\"?\")} has expected_value but no tolerance')
+                  errors += 1
+
+          # Verify workloads exist for thread01
+          wl_dir = pathlib.Path('workloads/thread01_wcm')
+          if not wl_dir.exists():
+              print(f'FAIL: workloads/thread01_wcm/ directory missing')
+              errors += 1
+          else:
+              wls = list(wl_dir.glob('*.toml'))
+              print(f'Thread 1 WCM workloads: {len(wls)}')
+              for wl in wls:
+                  wl_data = tomllib.loads(wl.read_text())
+                  wl_meta = wl_data.get('metadata', {})
+                  if wl_meta.get('thread') != '01':
+                      print(f'FAIL: {wl.name} has thread={wl_meta.get(\"thread\")} not \"01\"')
+                      errors += 1
+
+          print(f'{errors} error(s)' if errors else 'Thread 1 WCM integrity: PASS')
           sys.exit(1 if errors else 0)
           "
 

@@ -49,7 +49,7 @@ actual TURN relay IPC.
 
 | Item | Action | Owner |
 |------|--------|-------|
-| `data/sources/*.toml` — all `blake3 = ""` | Run `deploy/backfill_hashes.sh` after fetching | CATHEDRAL (needs fetch infrastructure) |
+| `data/sources/thread01_wcm.toml` — 10/25 hashed (May 19) | Remaining 15 need manual fetch (BRENDA, etc.) | CATHEDRAL |
 | Thread 1 WCM — 0/27 targets validated | Review `validation/wcm-20260509/`, flip where justified | CATHEDRAL |
 | Thread 5 ML — `accessions = []` | Document as `source_type = "internal"` (neuralSpring models) | neuralSpring team |
 

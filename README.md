@@ -111,7 +111,7 @@ lineage/            The unified lineage — master map and thread index
 expressions/        Domain thread expression documents
   ABG_WHOLE_CELL_REBUILD.md Thread 1: whole-cell modeling (first expression)
 data/               Data source manifests and validation targets
-  sources/          Per-thread data source TOMLs (11 files, 165 sources)
+  sources/          Per-thread data source TOMLs (11 files, 165 sources, 10 BLAKE3-anchored)
   targets/          Per-thread validation target TOMLs (11 files, 184 targets)
 graphs/             Foundation-specific deploy graphs (references projectNUCLEUS)
 deploy/             Operational scripts

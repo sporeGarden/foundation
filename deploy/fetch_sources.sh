@@ -48,9 +48,13 @@ blake3_hash() {
         b3sum "$1" | cut -d' ' -f1
     else
         python3 -c "
-import hashlib, sys
-h = hashlib.blake2b(open(sys.argv[1], 'rb').read())
-print(h.hexdigest())
+import sys
+try:
+    import blake3
+    print(blake3.blake3(open(sys.argv[1], 'rb').read()).hexdigest())
+except ImportError:
+    print('no-blake3-tool', file=sys.stderr)
+    sys.exit(1)
 " "$1" 2>/dev/null || echo "no-hash"
     fi
 }

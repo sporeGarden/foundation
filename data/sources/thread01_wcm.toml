@@ -8,8 +8,10 @@
 thread = 1
 thread_name = "Whole-Cell Modeling"
 expression = "expressions/ABG_WHOLE_CELL_REBUILD.md"
-last_updated = "2026-05-06"
+last_updated = "2026-05-19"
 total_sources = 25
+hashed_sources = 10
+unhashed_reason = "15 sources lack automated fetchers (BRENDA, EcoCyc, GitHub, literature, AlphaFold, GROMACS, EMDB)"
 
 # =============================================================================
 # Paper A: Karr et al. 2012 — M. genitalium whole-cell model
@@ -22,8 +24,8 @@ description = "M. genitalium G37 complete genome (525 protein-coding genes)"
 accessions = ["NC_000908.2"]
 url = "https://www.ncbi.nlm.nih.gov/nuccore/NC_000908.2"
 format = "genbank"
-blake3 = ""
-retrieved = ""
+blake3 = "7b247198c66e6fa7c4db1a28cf4fe3e50857f4f9e9a6e5b7392d1e10133f31e7"
+retrieved = "2026-05-19T14:59:19Z"
 paper = "A"
 
 [[sources]]
@@ -33,8 +35,8 @@ description = "M. genitalium G37 reference assembly"
 accessions = ["GCA_000027325.1"]
 url = "https://www.ncbi.nlm.nih.gov/assembly/GCA_000027325.1"
 format = "fasta"
-blake3 = ""
-retrieved = ""
+blake3 = "0a8ff703568e888008ce70a1acb0e9f50a0bffdec1530db25f5d8bc1be7fb69f"
+retrieved = "2026-05-19T14:59:19Z"
 paper = "A"
 
 [[sources]]
@@ -44,8 +46,8 @@ description = "M. genitalium complete reference proteome (484 proteins)"
 accessions = ["UP000000807"]
 url = "https://www.uniprot.org/proteomes/UP000000807"
 format = "fasta"
-blake3 = ""
-retrieved = ""
+blake3 = "5c1e27ec868405be6feb937bc14adf8a5158d16ca0d48e9ef921de22885312a3"
+retrieved = "2026-05-19T14:59:19Z"
 paper = "A"
 
 [[sources]]
@@ -55,8 +57,8 @@ description = "M. genitalium metabolic network and gene-reaction mappings"
 accessions = ["mge"]
 url = "https://www.genome.jp/kegg-bin/show_organism?org=mge"
 format = "kgml"
-blake3 = ""
-retrieved = ""
+blake3 = "15c66456aee5b82952cd1002346e0b768808b2ab6a9800c23646f730b742c7cb"
+retrieved = "2026-05-19T14:59:19Z"
 paper = "A"
 
 [[sources]]
@@ -121,8 +123,8 @@ description = "E. coli K-12 MG1655 complete genome (4,623 genes)"
 accessions = ["NC_000913.3"]
 url = "https://www.ncbi.nlm.nih.gov/nuccore/NC_000913.3"
 format = "genbank"
-blake3 = ""
-retrieved = ""
+blake3 = "67dee55704e1183ee554157f66bd79e90e6f93b51678c46a5d948172d13b68ad"
+retrieved = "2026-05-19T14:59:19Z"
 paper = "D"
 
 [[sources]]
@@ -132,8 +134,8 @@ description = "E. coli K-12 reference proteome (4,403 proteins)"
 accessions = ["UP000000625"]
 url = "https://www.uniprot.org/proteomes/UP000000625"
 format = "fasta"
-blake3 = ""
-retrieved = ""
+blake3 = "79497129a06cbfca5ef5115aaccf4bd195e7e5015b3cb3fe07c45d13060d8240"
+retrieved = "2026-05-19T14:59:19Z"
 paper = "D"
 
 [[sources]]
@@ -143,8 +145,8 @@ description = "E. coli K-12 metabolic network"
 accessions = ["eco"]
 url = "https://www.genome.jp/kegg-bin/show_organism?org=eco"
 format = "kgml"
-blake3 = ""
-retrieved = ""
+blake3 = "0749a78559066a8e0f4854f9492e3bfe5b001c9a9bc09ea85e8b0153099fcb2f"
+retrieved = "2026-05-19T14:59:19Z"
 paper = "D"
 
 [[sources]]
@@ -170,8 +172,8 @@ description = "JCVI-syn3A complete genome (493 genes)"
 accessions = ["CP016816.2"]
 url = "https://www.ncbi.nlm.nih.gov/nuccore/CP016816.2"
 format = "genbank"
-blake3 = ""
-retrieved = ""
+blake3 = "0687f00d56d0d477ba57895ac48e69db06b777f24dc248eed100c6ccd8ba64d4"
+retrieved = "2026-05-19T14:59:19Z"
 paper = "E"
 
 [[sources]]
@@ -181,8 +183,8 @@ description = "JCVI synthetic biology project — source of proteomics, transcri
 accessions = ["PRJNA357500"]
 url = "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA357500"
 format = "sra"
-blake3 = ""
-retrieved = ""
+blake3 = "6c4cc430ec088bd16bfa315f82f37ac476f1666ac615ce06f14ce5c4dc22cc44"
+retrieved = "2026-05-19T14:59:19Z"
 paper = "E"
 
 [[sources]]
@@ -271,6 +273,7 @@ format = "fasta"
 blake3 = ""
 retrieved = ""
 paper = "F"
+notes = "UniProt streaming API returns empty (20B) as of 2026-05-19. Proteome may be reclassified. Try direct download or alternate accession."
 
 [[sources]]
 id = "gromacs_software"
@@ -319,6 +322,6 @@ description = "JCVI-syn3.0 reference assembly"
 accessions = ["GCA_900015295.1"]
 url = "https://www.ncbi.nlm.nih.gov/assembly/GCA_900015295.1"
 format = "fasta"
-blake3 = ""
-retrieved = ""
+blake3 = "d814dea9b5237c1d359eeae54414cadbe59dbdd66a8b2b9dad714e5904434c8d"
+retrieved = "2026-05-19T14:59:19Z"
 paper = "G"
